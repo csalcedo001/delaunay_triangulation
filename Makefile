@@ -13,7 +13,15 @@ OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*))
 .PRECIOUS: $(OBJ)/%.o
 
 
-all: $(BINFILES)
+all: directories $(BINFILES)
+
+directories: $(BIN) $(OBJ)
+
+$(BIN):
+	mkdir $(BIN)
+
+$(OBJ):
+	mkdir $(OBJ)
 
 $(BIN)/%: $(SRC)/%.cpp $(OBJFILES)
 	$(CXX) $(CXXFLAGS) $^
