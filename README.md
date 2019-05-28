@@ -1,1 +1,3 @@
-# delaunay_triangulation
+# Delaunay Triangulation
+
+Final project.
