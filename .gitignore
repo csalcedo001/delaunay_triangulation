@@ -33,7 +33,7 @@
 bin/*
 
 # Test files
-tests
+test*
 
 # Swap files
 *.swp
