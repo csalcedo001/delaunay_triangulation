@@ -1,5 +1,5 @@
-#ifndef DT_BASE_DELAUNAY_TRIANGULATION_HPP_
-#define DT_BASE_DELAUNAY_TRIANGULATION_HPP_
+#ifndef DELAUNAY_TRIANGULATION_BASE_DT_HPP_
+#define DELAUNAY_TRIANGULATION_BASE_DT_HPP_
 
 #include <vector>
 
@@ -7,7 +7,7 @@
 
 /*
 * D: Dimensions
-* point_vector_: Vector of D-dimentional points
+* point_vector_: Vector of D-dimensional points
 */ 
 template <int D>
 class BaseDelaunayTriangulation
