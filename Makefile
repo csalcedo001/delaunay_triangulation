@@ -26,7 +26,7 @@ $(OBJ):
 $(BIN)/%: $(SRC)/%.cpp $(OBJFILES)
 	$(CXX) $(CXXFLAGS) $^
 
-$(OBJ)/%.o: $(LIB)/%.cpp $(INC)/%.h
+$(OBJ)/%.o: $(LIB)/%.cpp $(INC)/%.hpp
 	$(CXX) $(CXXFLAGS) $< -c
 
 re: clean all
