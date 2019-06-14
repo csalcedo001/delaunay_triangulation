@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "point.hpp"
+#include "geometry/point.hpp"
 
 // Base class for a Delaunay Triangulation algorithm
 // 
