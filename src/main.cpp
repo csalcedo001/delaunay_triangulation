@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "delaunay_triangulation.h"
+#include "base_dt.hpp"
 
 using namespace std;
 
@@ -30,6 +30,7 @@ Triangulation get_delaunay_triangulation(Point set[], int size)
 
 int main (void)
 {
+	Point<2> p;
 	//TODO : Write main program with structures from delaunay_triangulation.h
 	const int size = 100;
 	Point set[size];
