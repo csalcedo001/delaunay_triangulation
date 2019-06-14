@@ -5,15 +5,18 @@
 
 #include "point.hpp"
 
-/*
-* D: Dimensions
-* point_vector_: Vector of D-dimensional points
-*/ 
+// Base class for a Delaunay Triangulation algorithm
+// 
+// D: Dimensions
+// point_vector_: Vector of D-dimensional points
+//  
+
 template <int D>
 class BaseDelaunayTriangulation
 {
 public:
 	typedef std::vector<Point<D>> PointVector;
+
 protected:
 	PointVector point_vector_;
 

@@ -1,15 +1,16 @@
-#ifndef DT_POINT_HPP_
-#define DT_POINT_HPP_
+#ifndef DELAUNAY_TRIANGULATION_POINT_HPP_
+#define DELAUNAY_TRIANGULATION_POINT_HPP_
 
 #include <array>
 #include <ostream>
 #include <istream>
 
-/*
-* D: Dimensions
-* id_: Unique point identifier
-* coordinates_: Point coordinates in D-dimentional space
-*/
+// Class for a D-dimensional point
+// 
+// D: Dimensions
+// id_: Unique point identifier
+// coordinates_: Point coordinates in D-dimentional space
+// 
 
 template <int D>
 struct Point
