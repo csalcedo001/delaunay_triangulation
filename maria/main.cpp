@@ -20,7 +20,7 @@ Triangulation get_delaunay_triangulation(Point set[], int size)
 	Triangulation delaunay_triangulation(pH, pA, pB);
 	for (int i = 0; i < size; ++i)
 	{
-		Triangulation.insert(set[i]);
+		delaunay_triangulation.insert(set[i]);
 		
 	}
 	return delaunay_triangulation;
