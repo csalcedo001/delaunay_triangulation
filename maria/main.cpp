@@ -6,7 +6,7 @@
 
 void legalize_edge(Point p, Edge e, Triangulation t)
 {
-
+	// something
 };
 
 Point* compute_random_permutation(Point set[], int size)
