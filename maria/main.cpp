@@ -2,8 +2,6 @@
 
 #include "delaunay_triangulation.h"
 
-using namespace std;
-
 Point get_highest_point(Point set[], int size)
 {
 	// return the lexicographically highest point of P
@@ -30,11 +28,9 @@ Triangulation get_delaunay_triangulation(Point set[], int size)
 
 int main (void)
 {
-	Point<2> p;
-	//TODO : Write main program with structures from delaunay_triangulation.h
-	const int size = 100;
+    const int size = 100;
 	Point set[size];
-	delaunay_triangulation(set);
+	get_delaunay_triangulation(set, size);
 
 	return 0;
 }
