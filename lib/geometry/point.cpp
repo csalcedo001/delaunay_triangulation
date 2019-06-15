@@ -1,10 +1,10 @@
-#include "geometry/point.hpp"
+#include <geometry/point.hpp>
 
 #include <array>
 #include <ostream>
 #include <istream>
 
-#include "geometry/coordinate.hpp"
+#include <geometry/coordinate.hpp>
 
 namespace geometry
 {

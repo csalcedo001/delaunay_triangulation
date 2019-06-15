@@ -1,11 +1,10 @@
 #ifndef DELAUNAY_TRIANGULATION_S_HULL_DT_HPP_
 #define DELAUNAY_TRIANGULATION_S_HULL_DT_HPP_
 
-#include "base_dt.hpp"
-
 #include <vector>
 
-#include "point.h"
+#include <base_dt.hpp>
+#include <point.hpp>
 
 #define S_HULL_DT_DIMENSIONS 2
 
