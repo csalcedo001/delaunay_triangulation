@@ -11,6 +11,9 @@
 // point_vector_: Vector of D-dimensional points
 //  
 
+namespace geometry
+{
+
 template <int D>
 class BaseDelaunayTriangulation
 {
@@ -23,5 +26,7 @@ protected:
 public:
 	BaseDelaunayTriangulation(PointVector point_vector);
 };
+
+} // namespace geometry
 
 #endif

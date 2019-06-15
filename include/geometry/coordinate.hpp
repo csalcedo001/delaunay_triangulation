@@ -1,6 +1,8 @@
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_COORDINATE_H_
 #define DELAUNAY_TRIANGULATION_GEOMETRY_COORDINATE_H_
 
+#include <array>
+
 namespace geometry
 {
 
@@ -19,20 +21,6 @@ public:
 	Coordinate(const CoordinateClass& coordinate);
 	Coordinate(Container coordinate_container);
 };
-
-
-template <int dimensions>
-Coordinate<dimensions>::Coordinate()
-{
-
-}
-
-template <int dimensions>
-Coordinate<dimensions>::Coordinate(const Coordinate<dimensions>& coordinate) :
-container_(coordinate.container_)
-{
-
-}
 
 } // namespace geometry
 

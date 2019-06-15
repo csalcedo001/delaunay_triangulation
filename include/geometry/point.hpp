@@ -14,6 +14,9 @@
 // coordinates_: Point coordinates in D-dimentional space
 // 
 
+namespace geometry
+{
+
 template <int dimensions>
 struct Point
 {
@@ -29,34 +32,6 @@ public:
 	friend std::istream &operator>>(std::istream &is, const Point<dimensions> &point);
 };
 
-
-
-template <int dimensions>
-Point<dimensions>::Point()
-{
-	// TODO : Assign unique id to point
-}
-
-template <int dimensions>
-Point<dimensions>::Point(const Point<dimensions> &point)
-{
-	// TODO : Define copy constructor. Copy same id
-}
-
-template <int dimensions>
-std::ostream &operator<<(std::ostream &os, const Point<dimensions> &point)
-{
-	// TODO : Define point output function
-
-	return os;
-}
-
-template <int dimensions>
-std::istream &operator>>(std::istream &is, const Point<dimensions> &point)
-{
-	// TODO : Define point input function
-
-	return is;
-}
+} // namespace geometry
 
 #endif
