@@ -8,7 +8,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -o $@ -I $(INC)
 
 BINFILES = $(addprefix $(BIN)/, $(basename $(notdir $(wildcard $(SRC)/*.cpp))))
-OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*/*.cpp))
+OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*/*.cpp) $(wildcard $(LIB)/*.cpp))
 
 OBJDIRS = $(addprefix $(OBJ)/, $(notdir $(wildcard $(LIB)/*)))
 
