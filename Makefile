@@ -12,6 +12,8 @@ OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*/*.cpp) $(wil
 
 OBJDIRS = $(addprefix $(OBJ)/, $(notdir $(wildcard $(LIB)/*)))
 
+
+.PHONY: directories
 .PRECIOUS: $(OBJ)/%.o
 
 all: directories $(BINFILES)
