@@ -6,6 +6,8 @@
 namespace geometry
 {
 
+// Declaration
+
 template <int dimensions, typename Precision>
 class Vector
 {
@@ -17,9 +19,27 @@ private:
 
 public:
 	Vector();
-	Vector(const Vector<dimensions>& coordinate);
+	Vector(const Vector<dimensions, Precision>& coordinate);
 	Vector(Container coordinate_container);
 };
+
+
+
+
+// Definition
+
+template <int dimensions, typename Precision>
+Vector<dimensions, Precision>::Vector()
+{
+
+}
+
+template <int dimensions, typename Precision>
+Vector<dimensions, Precision>::Vector(const Vector<dimensions, Precision>& coordinate) :
+	container_(coordinate.container_)
+{
+
+}
 
 } // namespace geometry
 

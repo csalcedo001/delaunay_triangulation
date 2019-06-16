@@ -1,16 +1,34 @@
 #include <iostream>
 
-#include "base_dt.hpp"
+#include <delaunay_triangulation/s_hull.hpp>
 
 using namespace std;
 
 int main (void)
 {
-	geometry::Coordinate<2> c1;
-	geometry::Coordinate<2> c2(c1);
+	geometry::Vector<2, float> c1;
+	geometry::Vector<2, float> c2(c1);
 
-	geometry::Point<2> p;
+	geometry::Point<2, float> p;
 	//TODO : Write main program with structures from delaunay_triangulation.h
+
+//	A a;
+//
+//	auto start = std::chrono::high_resolution_clock::now();
+//	
+//	a.returnCopy();
+//	
+//	auto end = std::chrono::high_resolution_clock::now();
+//	std::chrono::duration<double> elapsed = end - start;
+//	std::cout << "Time in seconds: " << std::chrono::duration_cast<std::chrono::nanoseconds>(elapsed).count() << '\n';
+//
+//	start = std::chrono::high_resolution_clock::now();
+//	
+//	a.returnReference();
+//	
+//	end = std::chrono::high_resolution_clock::now();
+//	elapsed = end - start;
+//	std::cout << "Time in seconds: " << std::chrono::duration_cast<std::chrono::nanoseconds>(elapsed).count() << '\n';
 
 	return 0;
 }
