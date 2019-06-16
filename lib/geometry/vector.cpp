@@ -3,20 +3,20 @@
 namespace geometry
 {
 
-template <int dimensions>
-Vector<dimensions>::Vector()
+template <int dimensions, typename Precision>
+Vector<dimensions, Precision>::Vector()
 {
 
 }
 
-template <int dimensions>
-Vector<dimensions>::Vector(const Vector<dimensions>& coordinate) :
-container_(coordinate.container_)
+template <int dimensions, typename Precision>
+Vector<dimensions, Precision>::Vector(const Vector<dimensions, Precision>& coordinate) :
+	container_(coordinate.container_)
 {
 
 }
 
-template class Vector<2>;
-template class Vector<3>;
+template class Vector<2, float>;
+template class Vector<3, float>;
 
 } // namespace geometry

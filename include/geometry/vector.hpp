@@ -6,11 +6,11 @@
 namespace geometry
 {
 
-template <int dimensions, typename >
+template <int dimensions, typename Precision>
 class Vector
 {
 public:
-	typedef std::array<int, dimensions> Container;
+	typedef std::array<Precision, dimensions> Container;
 
 private:
 	Container container_;
