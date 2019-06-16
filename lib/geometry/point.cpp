@@ -4,7 +4,7 @@
 #include <ostream>
 #include <istream>
 
-#include <geometry/coordinate.hpp>
+#include <geometry/vector.hpp>
 
 namespace geometry
 {

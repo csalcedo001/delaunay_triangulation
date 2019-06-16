@@ -5,7 +5,7 @@
 #include <ostream>
 #include <istream>
 
-#include <geometry/coordinate.hpp>
+#include <geometry/vector.hpp>
 
 // Class for a D-dimensional point
 // 
