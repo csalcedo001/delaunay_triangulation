@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <delaunay_triangulation/s_hull.hpp>
+#include <geometry/delaunay_triangulation.hpp>
 
 using namespace std;
 
@@ -10,6 +10,10 @@ int main (void)
 	geometry::Vector<2, float> c2(c1);
 
 	geometry::Point<2, float> p;
+
+	std::vector<geometry::Point<2, float>> a;
+
+	geometry::Triangulation<2, float> t;
 	//TODO : Write main program with structures from delaunay_triangulation.h
 
 //	A a;

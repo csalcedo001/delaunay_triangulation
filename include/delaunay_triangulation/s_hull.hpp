@@ -8,10 +8,11 @@
 
 #define S_HULL_DT_DIMENSIONS 2
 
-class SHullDelaunayTriangulation : public geometry::DelaunayTriangulation<S_HULL_DT_DIMENSIONS>
+class SHullDelaunayTriangulation : public geometry::DelaunayTriangulation<S_HULL_DT_DIMENSIONS, float>
 {
 public:
-	typedef std::vector<geometry::Point<S_HULL_DT_DIMENSIONS>> PointVector;
+	typedef std::vector<geometry::Point<S_HULL_DT_DIMENSIONS, float>> PointVector;
+
 private:
 	// TODO : Add attribute and method declarations
 
@@ -20,7 +21,7 @@ public:
 };
 
 SHullDelaunayTriangulation::SHullDelaunayTriangulation(PointVector point_vector) :
-geometry::DelaunayTriangulation<S_HULL_DT_DIMENSIONS>(point_vector)
+geometry::DelaunayTriangulation<S_HULL_DT_DIMENSIONS, float>(point_vector)
 {
 	// TODO : Initialize class
 }

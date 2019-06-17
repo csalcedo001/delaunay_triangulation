@@ -8,28 +8,21 @@
 namespace geometry
 {
 
-// Declaration
-
-template <int dimensions>
+template <int dimensions, typename Precision>
 class Triangulation
 {
 public:
-	typedef std::vector<Point<dimensions>> PointVector;
+	typedef std::vector<Point<dimensions, Precision>> PointVector;
 
 protected:
 	PointVector point_vector_;
 
 public:
-	Triangulation(PointVector point_vector);
+	// Triangulation(PointVector point_vector);
 };
 
-
-
-
-// Definition
-
-/* Code goes here */
-
 } // namespace geometry
+
+#include <geometry/impl/triangulation.ipp>
 
 #endif

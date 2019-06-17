@@ -8,13 +8,11 @@
 namespace geometry
 {
 
-// Declaration
-
-template <int dimensions>
-class DelaunayTriangulation : public Triangulation<dimensions>
+template <int dimensions, typename Precision>
+class DelaunayTriangulation : public Triangulation<dimensions, Precision>
 {
 public:
-	typedef std::vector<Point<dimensions>> PointVector;
+	typedef std::vector<Point<dimensions, Precision>> PointVector;
 
 protected:
 	PointVector point_vector_;
@@ -23,11 +21,8 @@ public:
 	DelaunayTriangulation(PointVector point_vector);
 };
 
-
-
-
-// Definition
-
 } // namespace geometry
+
+#include <geometry/impl/delaunay_triangulation.ipp>
 
 #endif

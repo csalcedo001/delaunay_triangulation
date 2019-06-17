@@ -6,8 +6,6 @@
 namespace geometry
 {
 
-// Declaration
-
 template <int dimensions, typename Precision>
 class Vector
 {
@@ -20,27 +18,13 @@ private:
 public:
 	Vector();
 	Vector(const Vector<dimensions, Precision>& coordinate);
-	Vector(Container coordinate_container);
+
+	friend std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &point);
+	friend std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &point);
 };
 
-
-
-
-// Definition
-
-template <int dimensions, typename Precision>
-Vector<dimensions, Precision>::Vector()
-{
-
-}
-
-template <int dimensions, typename Precision>
-Vector<dimensions, Precision>::Vector(const Vector<dimensions, Precision>& coordinate) :
-	container_(coordinate.container_)
-{
-
-}
-
 } // namespace geometry
+
+#include <geometry/impl/vector.ipp>
 
 #endif
