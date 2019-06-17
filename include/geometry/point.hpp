@@ -28,8 +28,18 @@ public:
 	Point();
 	Point(const Point<dimensions, Precision> &point);
 
-	friend std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &point);
-	friend std::istream &operator>>(std::istream &is, const Point<dimensions, Precision> &point);
+	friend std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &point)
+{
+	// TODO : Define point serialization function
+
+	return os;
+}
+	friend std::istream &operator>>(std::istream &is, const Point<dimensions, Precision> &point)
+{
+	// TODO : Define point deserialization function
+
+	return is;
+}
 };
 
 } // namespace geometry

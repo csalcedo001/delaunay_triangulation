@@ -2,20 +2,24 @@
 
 #include <geometry/delaunay_triangulation.hpp>
 
+
 using namespace std;
 
 int main (void)
 {
-	geometry::Vector<2, float> c1;
-	geometry::Vector<2, float> c2(c1);
 
+	geometry::Vector<2, float> v;
 	geometry::Point<2, float> p;
-
-	std::vector<geometry::Point<2, float>> a;
-
 	geometry::Triangulation<2, float> t;
+	geometry::DelaunayTriangulation<2, float> dt;
+
+	cin >> v;
+	cin >> p;
+	cin >> t;
+	cin >> dt;
 	//TODO : Write main program with structures from delaunay_triangulation.h
 
+// TODO : Test execution times
 //	A a;
 //
 //	auto start = std::chrono::high_resolution_clock::now();
