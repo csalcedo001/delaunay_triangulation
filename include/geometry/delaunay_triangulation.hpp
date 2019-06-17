@@ -18,7 +18,11 @@ protected:
 	PointVector point_vector_;
 
 public:
-	DelaunayTriangulation(PointVector point_vector);
+	DelaunayTriangulation() = default;
+	DelaunayTriangulation(const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation);
+
+	friend std::ostream &operator<<(std::ostream &os, const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation);
+	friend std::istream &operator>>(std::istream &is, const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation);
 };
 
 } // namespace geometry

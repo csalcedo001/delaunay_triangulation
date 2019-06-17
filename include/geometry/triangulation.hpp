@@ -18,7 +18,11 @@ protected:
 	PointVector point_vector_;
 
 public:
-	// Triangulation(PointVector point_vector);
+	Triangulation() = default;
+	Triangulation(const Triangulation &triangulation);
+
+	friend std::ostream &operator<<(std::ostream &os, const Triangulation<dimensions, Precision> &triangulation);
+	friend std::istream &operator>>(std::istream &is, const Triangulation<dimensions, Precision> &triangulation);
 };
 
 } // namespace geometry

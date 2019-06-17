@@ -7,12 +7,6 @@ namespace geometry
 {
 
 template <int dimensions, typename Precision>
-Vector<dimensions, Precision>::Vector()
-{
-
-}
-
-template <int dimensions, typename Precision>
 Vector<dimensions, Precision>::Vector(const Vector<dimensions, Precision>& coordinate) :
 	container_(coordinate.container_)
 {
@@ -20,7 +14,7 @@ Vector<dimensions, Precision>::Vector(const Vector<dimensions, Precision>& coord
 }
 
 template <int dimensions, typename Precision>
-std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &point)
+std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &vector)
 {
 	// TODO : Define vector serialization function
 
@@ -28,7 +22,7 @@ std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &
 }
 
 template <int dimensions, typename Precision>
-std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &point)
+std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &vector)
 {
 	// TODO : Define vector deserialization function
 

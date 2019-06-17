@@ -16,11 +16,11 @@ private:
 	Container container_;
 
 public:
-	Vector();
+	Vector() = default;
 	Vector(const Vector<dimensions, Precision>& coordinate);
 
-	friend std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &point);
-	friend std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &point);
+	friend std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &vector);
+	friend std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &vector);
 };
 
 } // namespace geometry
