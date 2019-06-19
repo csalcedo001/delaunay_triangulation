@@ -18,7 +18,7 @@ private:
 
 public:
 	Vector() = default;
-	Vector(const Vector<dimensions, Precision>& coordinate);
+	Vector(const Vector &coordinate);
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Vector<d, P> &vector);

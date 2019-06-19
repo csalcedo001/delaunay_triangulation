@@ -19,7 +19,7 @@ protected:
 
 public:
 	DelaunayTriangulation() = default;
-	DelaunayTriangulation(const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation);
+	DelaunayTriangulation(const DelaunayTriangulation &delaunay_triangulation);
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const DelaunayTriangulation<d, P> &delaunay_triangulation);

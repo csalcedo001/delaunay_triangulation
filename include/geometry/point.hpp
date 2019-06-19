@@ -26,7 +26,7 @@ private:
 
 public:
 	Point();
-	Point(const Point<dimensions, Precision> &point);
+	Point(const Point &point);
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Point<d, P> &point);
