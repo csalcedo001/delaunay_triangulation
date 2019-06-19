@@ -8,20 +8,23 @@ CXX = g++
 CXXFLAGS = -std=c++17 -o $@ -I $(INC)
 
 BINFILES = $(addprefix $(BIN)/, $(basename $(notdir $(wildcard $(SRC)/*.cpp))))
-OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*))
+OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*/*.cpp) $(wildcard $(LIB)/*.cpp))
 
+OBJDIRS = $(addprefix $(OBJ)/, $(notdir $(wildcard $(LIB)/*)))
+
+
+.PHONY: directories
 .PRECIOUS: $(OBJ)/%.o
-
 
 all: directories $(BINFILES)
 
 directories: $(BIN) $(OBJ)
 
 $(BIN):
-	mkdir $(BIN)
+	mkdir -p $(BIN)
 
 $(OBJ):
-	mkdir $(OBJ)
+	mkdir -p $(OBJDIRS)
 
 $(BIN)/%: $(SRC)/%.cpp $(OBJFILES)
 	$(CXX) $(CXXFLAGS) $^
@@ -35,5 +38,5 @@ run: all
 	./bin/main
 
 clean:
-	rm -rf $(BIN)/*
-	rm -f $(OBJ)/*
+	rm -rf $(BIN)
+	rm -rf $(OBJ)
