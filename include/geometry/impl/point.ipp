@@ -29,6 +29,22 @@ Point<dimensions, Precision>::Point(const Point<dimensions, Precision> &point)
 	// TODO : Define copy constructor. Copy same id
 }
 
+template <int dimensions, typename Precision>
+std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &point)
+{
+	// TODO : Define point serialization function
+
+	return os;
+}
+
+template <int dimensions, typename Precision>
+std::istream &operator>>(std::istream &is, const Point<dimensions, Precision> &point)
+{
+	// TODO : Define point deserialization function
+
+	return is;
+}
+
 } // namespace geometry
 
 #endif

@@ -17,6 +17,14 @@ int main (void)
 	cin >> p;
 	cin >> t;
 	cin >> dt;
+
+	cout << v;
+	cout << p;
+	cout << t;
+	cout << dt;
+
+	// TODO : Test structures: Write test units.
+
 	//TODO : Write main program with structures from delaunay_triangulation.h
 
 // TODO : Test execution times
