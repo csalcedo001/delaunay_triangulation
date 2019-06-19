@@ -20,19 +20,11 @@ public:
 	Vector() = default;
 	Vector(const Vector<dimensions, Precision>& coordinate);
 
-	friend std::ostream &operator<<(std::ostream &os, const Vector<dimensions, Precision> &vector)
-	{
-		// TODO : Define vector serialization function
+	template <int d, typename P>
+	friend std::ostream &operator<<(std::ostream &os, const Vector<d, P> &vector);
 
-		return os;
-	}
-
-	friend std::istream &operator>>(std::istream &is, const Vector<dimensions, Precision> &vector)
-	{
-		// TODO : Define vector deserialization function
-
-		return is;
-	}
+	template <int d, typename P>
+	friend std::istream &operator>>(std::istream &is, const Vector<d, P> &vector);
 };
 
 } // namespace geometry

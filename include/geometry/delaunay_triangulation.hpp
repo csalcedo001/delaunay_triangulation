@@ -21,19 +21,11 @@ public:
 	DelaunayTriangulation() = default;
 	DelaunayTriangulation(const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation);
 
-	friend std::ostream &operator<<(std::ostream &os, const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation)
-	{
-		// TODO : Define triangulation serialization function
-	
-		return os;
-	}
+	template <int d, typename P>
+	friend std::ostream &operator<<(std::ostream &os, const DelaunayTriangulation<d, P> &delaunay_triangulation);
 
-	friend std::istream &operator>>(std::istream &is, const DelaunayTriangulation<dimensions, Precision> &delaunay_triangulation)
-	{
-		// TODO : Define triangulation deserialization function
-	
-		return is;
-	}
+	template <int d, typename P>
+	friend std::istream &operator>>(std::istream &is, const DelaunayTriangulation<d, P> &delaunay_triangulation);
 };
 
 } // namespace geometry

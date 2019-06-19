@@ -21,19 +21,11 @@ public:
 	Triangulation() = default;
 	Triangulation(const Triangulation &triangulation);
 
-	friend std::ostream &operator<<(std::ostream &os, const Triangulation<dimensions, Precision> &triangulation)
-	{
-		// TODO : Define triangulation serialization function
-	
-		return os;
-	}
+	template <int d, typename P>
+	friend std::ostream &operator<<(std::ostream &os, const Triangulation<d, P> &triangulation);
 
-	friend std::istream &operator>>(std::istream &is, const Triangulation<dimensions, Precision> &triangulation)
-	{
-		// TODO : Define triangulation deserialization function
-	
-		return is;
-	}
+	template <int d, typename P>
+	friend std::istream &operator>>(std::istream &is, const Triangulation<d, P> &triangulation);
 };
 
 } // namespace geometry
