@@ -5,7 +5,7 @@ LIB = lib
 BIN = bin
 
 CXX = g++
-CXXFLAGS = -std=c++17 -o $@ -I $(INC)
+CXXFLAGS = -std=c++17 -o $@ -I $(INC) -lGL -lGLU -lGLEW -lglfw
 
 BINFILES = $(addprefix $(BIN)/, $(basename $(notdir $(wildcard $(SRC)/*.cpp))))
 OBJFILES = $(patsubst $(LIB)/%.cpp, $(OBJ)/%.o, $(wildcard $(LIB)/*/*.cpp) $(wildcard $(LIB)/*.cpp))
@@ -21,10 +21,10 @@ all: directories $(BINFILES)
 directories: $(BIN) $(OBJ)
 
 $(BIN):
-	mkdir -p $(BIN)
+	@mkdir -p $(BIN)
 
 $(OBJ):
-	mkdir -p $(OBJDIRS)
+	@mkdir -p $(OBJDIRS) $(OBJ)
 
 $(BIN)/%: $(SRC)/%.cpp $(OBJFILES)
 	$(CXX) $(CXXFLAGS) $^
