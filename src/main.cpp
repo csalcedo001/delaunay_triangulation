@@ -1,27 +1,28 @@
 #include <iostream>
 
 #include <geometry/delaunay_triangulation.hpp>
-
+#include <window/canvas.hpp>
 
 using namespace std;
 
 int main (void)
 {
+	Window m(100,100, 2000, "Testing");
+	m.display();
+	// geometry::Vector<2, float> v;
+	// geometry::Point<2, float> p;
+	// geometry::Triangulation<2, float> t;
+	// geometry::DelaunayTriangulation<2, float> dt;
 
-	geometry::Vector<2, float> v;
-	geometry::Point<2, float> p;
-	geometry::Triangulation<2, float> t;
-	geometry::DelaunayTriangulation<2, float> dt;
+	// cin >> v;
+	// cin >> p;
+	// cin >> t;
+	// cin >> dt;
 
-	cin >> v;
-	cin >> p;
-	cin >> t;
-	cin >> dt;
-
-	cout << v;
-	cout << p;
-	cout << t;
-	cout << dt;
+	// cout << v;
+	// cout << p;
+	// cout << t;
+	// cout << dt;
 
 	// TODO : Test structures: Write test units.
 
