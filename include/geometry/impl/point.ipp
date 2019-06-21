@@ -4,7 +4,7 @@
 #include <array>
 #include <ostream>
 #include <istream>
-
+#include <GL/glew.h>
 #include <geometry/vector.hpp>
 
 // Class for a D-dimensional point
@@ -27,21 +27,108 @@ template <int dimensions, typename Precision>
 Point<dimensions, Precision>::Point(const Point<dimensions, Precision> &point)
 {
 	// TODO : Define copy constructor. Copy same id
+	for(int i = 0; i<dimensions; ++i) {
+		coordinates_[i] = point.coordinates_[i];
+	}
 }
+
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision>::Point(const std::array<Precision, dimensions> coord)
+		: coordinates_(coord)
+	{}
+
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision> Point<dimensions, Precision>::operator+(const Point<dimensions, Precision>& point)const
+	{
+		std::array<Precision, dimensions> res;
+
+		for (int i = 0; i<dimensions; ++i) {
+			res[i] = coordinates_[i] + point.coordinates_[i];
+		}
+
+		return Point<dimensions, Precision>(res);
+	}
+	
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision> Point<dimensions, Precision>::operator-(const Point<dimensions, Precision>& point)const
+	{
+		std::array<Precision, dimensions> res;
+
+		for (int i = 0; i<dimensions; ++i) {
+			res[i] = coordinates_[i] - point.coordinates_[i];
+		}
+
+		return Point<dimensions, Precision>(res);
+	}
+	
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision> Point<dimensions, Precision>::operator*(const Precision &scalar)
+	{
+		std::array<Precision, dimensions> res;
+
+		for (int i = 0; i<dimensions; ++i) {
+			res[i] = coordinates_[i] * scalar;
+		}
+
+		return Point<dimensions, Precision>(res);
+	}
+
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision> operator*(Precision scalar, const Point<dimensions, Precision> &point){
+		return point*scalar;
+	}
+
+	template <int dimensions, typename Precision>
+	Point<dimensions, Precision>& Point<dimensions, Precision>::operator=(const Point<dimensions, Precision> &point)
+	{
+		if (this == &point)	return *this;
+
+		for(int i = 0; i<dimensions; ++i) {
+			coordinates_[i] = point.coordinates_[i];
+		}
+
+		return *this;
+	}
+
+	template <int dimensions, typename Precision>
+	Precision Point<dimensions, Precision>::dotProduct(const Point<dimensions,Precision> &point)
+	{
+		Precision r=0;
+		for (int i = 0; i < dimensions; i++) {
+			r += coordinates_[i] * point.coordinates_[i];
+		}
+		return r;
+	}
+
+	template <int dimensions, typename Precision>	
+	void Point<dimensions, Precision>::render() 
+	{
+		GLfloat y = dimensions < 2 ? 0 : coordinates_[1];
+		GLfloat z = dimensions < 3 ? 0 : coordinates_[2];
+		glVertex3f(coordinates_[0], y, z);
+	}
+
 
 template <int dimensions, typename Precision>
 std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &point)
 {
 	// TODO : Define point serialization function
+	os<<point.coordinates_[0];
+	
+	for(int i = 1; i<dimensions; ++i) {
+		os<<" "<<point.coordinates_[i];
+	}
 
 	return os;
 }
 
 template <int dimensions, typename Precision>
-std::istream &operator>>(std::istream &is, const Point<dimensions, Precision> &point)
+std::istream &operator>>(std::istream &is, Point<dimensions, Precision> &point)
 {
 	// TODO : Define point deserialization function
-
+	std::cout << "Ingrese "<<dimensions<< " coordenadas para el punto\n";
+	for(auto &it:point.coordinates_)
+		is>>it;
 	return is;
 }
 
