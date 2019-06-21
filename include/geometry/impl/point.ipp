@@ -1,11 +1,17 @@
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_POINT_IPP_
 #define DELAUNAY_TRIANGULATION_GEOMETRY_POINT_IPP_
 
+#include <geometry/vector.hpp>
+
 #include <array>
 #include <ostream>
 #include <istream>
-#include <GL/glew.h>
-#include <geometry/vector.hpp>
+
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 // Class for a D-dimensional point
 // 
@@ -26,97 +32,95 @@ Point<dimensions, Precision>::Point()
 template <int dimensions, typename Precision>
 Point<dimensions, Precision>::Point(const Point<dimensions, Precision> &point)
 {
-	// TODO : Define copy constructor. Copy same id
-	for(int i = 0; i<dimensions; ++i) {
+	for (int i = 0; i < dimensions; ++i) {
 		coordinates_[i] = point.coordinates_[i];
 	}
 }
 
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision>::Point(const std::array<Precision, dimensions> coord)
-		: coordinates_(coord)
-	{}
+template <int dimensions, typename Precision>
+Point<dimensions, Precision>::Point(const std::array<Precision, dimensions> coord)
+	: coordinates_(coord)
+{}
 
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision> Point<dimensions, Precision>::operator+(const Point<dimensions, Precision>& point)const
-	{
-		std::array<Precision, dimensions> res;
+template <int dimensions, typename Precision>
+Point<dimensions, Precision> Point<dimensions, Precision>::operator+(const Point<dimensions, Precision>& point) const
+{
+	std::array<Precision, dimensions> res;
 
-		for (int i = 0; i<dimensions; ++i) {
-			res[i] = coordinates_[i] + point.coordinates_[i];
-		}
-
-		return Point<dimensions, Precision>(res);
-	}
-	
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision> Point<dimensions, Precision>::operator-(const Point<dimensions, Precision>& point)const
-	{
-		std::array<Precision, dimensions> res;
-
-		for (int i = 0; i<dimensions; ++i) {
-			res[i] = coordinates_[i] - point.coordinates_[i];
-		}
-
-		return Point<dimensions, Precision>(res);
-	}
-	
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision> Point<dimensions, Precision>::operator*(const Precision &scalar)
-	{
-		std::array<Precision, dimensions> res;
-
-		for (int i = 0; i<dimensions; ++i) {
-			res[i] = coordinates_[i] * scalar;
-		}
-
-		return Point<dimensions, Precision>(res);
+	for (int i = 0; i < dimensions; ++i) {
+		res[i] = coordinates_[i] + point.coordinates_[i];
 	}
 
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision> operator*(Precision scalar, const Point<dimensions, Precision> &point){
-		return point*scalar;
+	return Point<dimensions, Precision>(res);
+}
+
+template <int dimensions, typename Precision>
+Point<dimensions, Precision> Point<dimensions, Precision>::operator-(const Point<dimensions, Precision>& point) const
+{
+	std::array<Precision, dimensions> res;
+
+	for (int i = 0; i < dimensions; ++i) {
+		res[i] = coordinates_[i] - point.coordinates_[i];
 	}
 
-	template <int dimensions, typename Precision>
-	Point<dimensions, Precision>& Point<dimensions, Precision>::operator=(const Point<dimensions, Precision> &point)
-	{
-		if (this == &point)	return *this;
+	return Point<dimensions, Precision>(res);
+}
 
-		for(int i = 0; i<dimensions; ++i) {
-			coordinates_[i] = point.coordinates_[i];
-		}
+template <int dimensions, typename Precision>
+Point<dimensions, Precision> Point<dimensions, Precision>::operator*(const Precision &scalar)
+{
+	std::array<Precision, dimensions> res;
 
-		return *this;
+	for (int i = 0; i<dimensions; ++i) {
+		res[i] = coordinates_[i] * scalar;
 	}
 
-	template <int dimensions, typename Precision>
-	Precision Point<dimensions, Precision>::dotProduct(const Point<dimensions,Precision> &point)
-	{
-		Precision r=0;
-		for (int i = 0; i < dimensions; i++) {
-			r += coordinates_[i] * point.coordinates_[i];
-		}
-		return r;
+	return Point<dimensions, Precision>(res);
+}
+
+template <int dimensions, typename Precision>
+Point<dimensions, Precision> operator*(Precision scalar, const Point<dimensions, Precision> &point){
+	return point * scalar;
+}
+
+template <int dimensions, typename Precision>
+Point<dimensions, Precision>& Point<dimensions, Precision>::operator=(const Point<dimensions, Precision> &point)
+{
+	if (this == &point)	return *this;
+
+	for(int i = 0; i<dimensions; ++i) {
+		coordinates_[i] = point.coordinates_[i];
 	}
 
-	template <int dimensions, typename Precision>	
-	void Point<dimensions, Precision>::render() 
-	{
-		GLfloat y = dimensions < 2 ? 0 : coordinates_[1];
-		GLfloat z = dimensions < 3 ? 0 : coordinates_[2];
-		glVertex3f(coordinates_[0], y, z);
-	}
+	return *this;
+}
 
+template <int dimensions, typename Precision>
+Precision Point<dimensions, Precision>::dotProduct(const Point<dimensions,Precision> &point)
+{
+	Precision r = 0;
+	for (int i = 0; i < dimensions; i++) {
+		r += coordinates_[i] * point.coordinates_[i];
+	}
+	return r;
+}
+
+template <int dimensions, typename Precision>	
+void Point<dimensions, Precision>::render() 
+{
+	GLfloat y = dimensions < 2 ? 0 : coordinates_[1];
+	GLfloat z = dimensions < 3 ? 0 : coordinates_[2];
+
+	glVertex3f(coordinates_[0], y, z);
+}
 
 template <int dimensions, typename Precision>
 std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &point)
 {
-	// TODO : Define point serialization function
-	os<<point.coordinates_[0];
+	os << point.coordinates_[0];
 	
-	for(int i = 1; i<dimensions; ++i) {
-		os<<" "<<point.coordinates_[i];
+	for(int i = 1; i < dimensions; ++i) {
+		os << " " << point.coordinates_[i];
 	}
 
 	return os;
@@ -125,10 +129,11 @@ std::ostream &operator<<(std::ostream &os, const Point<dimensions, Precision> &p
 template <int dimensions, typename Precision>
 std::istream &operator>>(std::istream &is, Point<dimensions, Precision> &point)
 {
-	// TODO : Define point deserialization function
-	std::cout << "Ingrese "<<dimensions<< " coordenadas para el punto\n";
-	for(auto &it:point.coordinates_)
-		is>>it;
+	std::cout << "Ingrese " << dimensions << " coordenadas para el punto\n";
+
+	for (auto &it:point.coordinates_)
+		is >> it;
+
 	return is;
 }
 

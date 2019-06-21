@@ -29,8 +29,8 @@ public:
 	Point(const Point<dimensions, Precision> &point);
 	Point(const std::array<Precision, dimensions> coord);
 
-	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&)const;
-	Point<dimensions, Precision> operator-(const Point<dimensions, Precision>&)const;
+	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&) const;
+	Point<dimensions, Precision> operator-(const Point<dimensions, Precision>&) const;
 
 	Point<dimensions, Precision> operator*(const Precision &scalar);
 	Point<dimensions, Precision>& operator=(const Point<dimensions, Precision> &point);
