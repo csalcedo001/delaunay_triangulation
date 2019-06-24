@@ -5,14 +5,6 @@ Final project.
 
 ## TODOs
 
-### Maria
-
-- Terminar algoritmo Randomized Insert del libro
-- Pasar a la estructura base
-- hacer related work: computational geometry
-- Buscar papers recientes (2016 en adelante)
-- Leer y redactar resumen del paper postsogc.pdf
-
 ### César
 
 - Crear estructuras geométricas generalizadas para d dimensiones (coordenada, punto, hiperesfera, simplex, etc.)
