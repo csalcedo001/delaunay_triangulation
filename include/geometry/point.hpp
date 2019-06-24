@@ -38,6 +38,9 @@ public:
 
 	void render();
 
+	// template <int d, typename P>
+	// friend void render(Point<d, P> point);
+
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Point<d, P> &point);
 
