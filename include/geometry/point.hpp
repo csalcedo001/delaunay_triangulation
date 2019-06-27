@@ -20,19 +20,33 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Point
 {
-private:
-	int id_;
-	std::array<float, dimensions> coordinates_;
+protected:
+	std::array<Precision, dimensions> coordinates_;
 
 public:
 	Point();
 	Point(const Point &point);
+	Point(const Point<dimensions, Precision> &point);
+	Point(const std::array<Precision, dimensions> coord);
+
+	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&) const;
+	Point<dimensions, Precision> operator-(const Point<dimensions, Precision>&) const;
+
+	Point<dimensions, Precision> operator*(const Precision &scalar);
+	Point<dimensions, Precision>& operator=(const Point<dimensions, Precision> &point);
+	Precision dotProduct(const Point<dimensions,Precision> &point);
+
+	void render();
+
+	// template <int d, typename P>
+	// friend void render(Point<d, P> point);
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Point<d, P> &point);
 
 	template <int d, typename P>
-	friend std::istream &operator>>(std::istream &is, const Point<d, P> &point);
+	friend std::istream &operator>>(std::istream &is, Point<d, P> &point);
+	
 };
 
 } // namespace geometry
