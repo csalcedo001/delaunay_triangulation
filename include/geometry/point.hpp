@@ -20,8 +20,7 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Point
 {
-private:
-	int id_;
+protected:
 	std::array<Precision, dimensions> coordinates_;
 
 public:

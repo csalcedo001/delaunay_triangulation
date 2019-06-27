@@ -16,7 +16,9 @@ template <typename Precision>
 class QuickHull
 {
 public:
-	Triangulation<2, Precision> operator()(std::vector<Point<2, Precision>> point_set>;
+	Triangulation<2, Precision> operator()(std::vector<Point<2, Precision>> point_set);
+
+	
 };
 
 } // namespace quick_hull
