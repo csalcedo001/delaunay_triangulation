@@ -1,9 +1,7 @@
 #include "plot.hpp"
 
-using namespace std;
-
 int main (void)
 {
-	Plot p();
+	plot();
 	return 0;
-}
+};
