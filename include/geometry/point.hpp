@@ -26,7 +26,6 @@ protected:
 public:
 	Point();
 	Point(const Point &point);
-	Point(const Point<dimensions, Precision> &point);
 	Point(const std::array<Precision, dimensions> coord);
 
 	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&) const;
