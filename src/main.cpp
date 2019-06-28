@@ -1,7 +1,8 @@
-#include "plot.hpp"
+#include <window/canvas.hpp>
 
 int main (void)
 {
-	plot();
+	Window w;
+	w.display(); 
 	return 0;
 };
