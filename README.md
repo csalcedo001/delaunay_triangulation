@@ -2,16 +2,9 @@
 
 Final project.
 
+[Overleaf report](https://www.overleaf.com/3571377254rxzpvkwwzmrd) 
 
 ## TODOs
-
-### Maria
-
-- Terminar algoritmo Randomized Insert del libro
-- Pasar a la estructura base
-- hacer related work: computational geometry
-- Buscar papers recientes (2016 en adelante)
-- Leer y redactar resumen del paper postsogc.pdf
 
 ### César
 

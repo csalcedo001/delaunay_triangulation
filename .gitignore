@@ -49,3 +49,6 @@ CMakeLists.txt
 
 # MAC OS X
 *.DS_Store
+
+# VS code
+.vscode

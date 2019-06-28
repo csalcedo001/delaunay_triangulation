@@ -24,31 +24,10 @@ using namespace geometry;
 class Window
 {
 	GLFWwindow *window = nullptr;
-
 	std::string title;
 	std::vector<Point<3, GLfloat>> points;
-
-	void genPoints(int n)
-	{
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-		std::default_random_engine generator(seed);
-		std::random_device rd;
-		std::uniform_real_distribution<double> dist(-2.,2.);
-		std::array<GLfloat, 3> V;
-
-		for (int i = 0; i < n; ++i)
-		{
-			V[0] = dist(generator);
-			V[1] = dist(generator);
-
-			V[2] = V[0] * V[0] + V[1] * V[1];
-
-			points.emplace_back(V);
-		}
-	}
-
 public:
-	Window(int width, int height, int n, std::string title)
+	Window(int width, int height, std::string title, std::vector<Point<3, GLfloat>> _points)
 	{
 		glfwInit();
 
@@ -62,7 +41,7 @@ public:
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		
-		genPoints(n);
+		this->points = _points;
 	};
 
 	void display()
@@ -88,7 +67,7 @@ public:
 
 			glMatrixMode(GL_MODELVIEW_MATRIX);
 			glTranslatef(0, 0, -5);
-			glRotatef(alpha, 2, -4, -1);
+			// glRotatef(alpha, 2, -4, -1);
 			
 			alpha += 1;
 
