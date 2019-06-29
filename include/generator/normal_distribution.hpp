@@ -9,8 +9,11 @@ namespace generator
 template <int dimensions, typename Precision>
 class NormalDistribution : public Distribution<dimensions, Precision>
 {
+private:
+	std::vector<std::normal_distribution<double>> distributions_;
+
 public:
-	// Initialize NormalDistribution with default means and variances
+	// Initialize NormalDistribution with default mean = 0 and variance = 1
 	NormalDistribution();
 
 	// Initialize NormalDistribution functor with a list of mean-variance pairs

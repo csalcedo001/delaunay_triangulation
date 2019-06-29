@@ -7,9 +7,16 @@ namespace generator
 {
 
 template <int dimensions, typename Precision>
-NormalDistribution<dimensions, Precision>::NormalDistribution()
+NormalDistribution<dimensions, Precision>::NormalDistribution() : Distribution<dimensions, Precision>()
 {
-	// TODO : Implement default normal distribution constructor
+	this->distributions_.resize(dimensions);
+
+	for (int dimension = 0; dimension < dimensions; ++dimension)
+	{
+		std::normal_distribution current_distribution(0., 1.);
+
+		this->distributions_[dimension] = current_distribution;
+	}
 }
 
 template <int dimensions, typename Precision>
@@ -21,8 +28,14 @@ NormalDistribution<dimensions, Precision>::NormalDistribution(std::array<std::pa
 template <int dimensions, typename Precision>
 geometry::Point<dimensions, Precision> NormalDistribution<dimensions, Precision>::operator()()
 {
-	// TODO : Implement return function
-	geometry::Point<dimensions, Precision> point;
+	std::array<Precision, dimensions> coordinates;
+
+	for (int dimension = 0; dimension < dimensions; ++dimension)
+	{
+		coordinates[dimension] = this->distributions_[dimension](this->generator_);
+	}
+
+	geometry::Point<dimensions, Precision> point(coordinates);
 
 	return point;
 }
