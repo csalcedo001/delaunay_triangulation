@@ -21,15 +21,59 @@
 using namespace std;
 using namespace geometry;
 
+GLfloat zoom = 5.f;
+GLfloat alpha = 210.f;
+GLfloat _beta = -70.f;
+
+double cursorX;
+double cursorY;
+
+void scroll_callback(GLFWwindow* window, double x, double y)
+{
+    zoom += (float) y / 4.f;
+    if (zoom < 0)
+        zoom = 0;
+}
+
+void cursor_position_callback(GLFWwindow* window, double x, double y)
+{
+    if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+    {
+        alpha += (GLfloat) (x - cursorX) / 10.f;
+        _beta += (GLfloat) (y - cursorY) / 10.f;
+
+        cursorX = x;
+        cursorY = y;
+    }
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button != GLFW_MOUSE_BUTTON_LEFT)
+        return;
+
+    if (action == GLFW_PRESS)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwGetCursorPos(window, &cursorX, &cursorY);
+    }
+    else
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
 class Window
 {
 	GLFWwindow *window = nullptr;
     int width = 600;
     int height = 600;
     string title = "Window";
+
+	vector<Point<3, float>> points_;
 public:
-	Window()
+	Window(vector<Point<3, float>> points)
 	{
+		points_ = points;
+
 		glfwInit();
 
 		glfwWindowHint(GLFW_SAMPLES, 4);
@@ -41,12 +85,14 @@ public:
 		glDepthFunc(GL_LEQUAL);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
+
+		glfwSetMouseButtonCallback(window, mouse_button_callback);
+		glfwSetCursorPosCallback(window, cursor_position_callback);
+		glfwSetScrollCallback(window, scroll_callback);
 	};
 
 	void display()
 	{
-		static float alpha = 30;
-
 		while (!glfwWindowShouldClose(window))
 		{
 			// What are this variables? width and height?
@@ -65,26 +111,27 @@ public:
 			gluPerspective(45, (double) w / (double) h, 0.1, 100);
 
 			glMatrixMode(GL_MODELVIEW_MATRIX);
-			glTranslatef(0, 0, -5);
+
+			glTranslatef(0, 0, -zoom);
+			glRotatef(_beta, 1.0, 0.0, 0.0);
+			glRotatef(alpha, 0.0, 0.0, 1.0);
 			
-			alpha += 1;
+			// glBegin(GL_LINES);
+            // glVertex3f(0, 0, 0);
+            // glVertex3f(0, 1, 0);
 
-			glBegin(GL_LINES);
-            glVertex3f(0, 0, 0);
-            glVertex3f(0, 1, 0);
+            // glVertex3f(0, 0, 0);
+            // glVertex3f(1, 0, 0);
 
-            glVertex3f(0, 0, 0);
-            glVertex3f(1, 0, 0);
+            // glVertex3f(0, 0, 0);
+            // glVertex3f(0, 0, 1);
+			// glEnd();
 
-            glVertex3f(0, 0, 0);
-            glVertex3f(0, 0, 1);
-
-            // glBegin(GL_POINTS);
-			// for (auto &p : points)
-			// {
-			// 	p.render();
-			// }
-
+            glBegin(GL_POINTS);
+			for (auto &p : points_)
+			{
+				p.render();
+			}
 			glEnd();
 			
 			glfwSwapBuffers(window);
