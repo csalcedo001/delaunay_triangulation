@@ -5,13 +5,22 @@
 #include <random>
 #include <chrono>
 
+#include <generator/distribution.hpp>
+
 namespace generator
 {
 
 template <int dimensions, typename Precision>
-UniformDistribution<dimensions, Precision>::UniformDistribution()
+UniformDistribution<dimensions, Precision>::UniformDistribution() : Distribution<dimensions, Precision>()
 {
-	// TODO : Implement constructor
+	this->distributions_.resize(dimensions);
+
+	for (int dimension = 0; dimension < dimensions; ++dimension)
+	{
+		std::uniform_real_distribution current_distribution(0., 1.);
+
+		this->distributions_[dimension] = current_distribution;
+	}
 }
 
 template <int dimensions, typename Precision>
@@ -29,11 +38,16 @@ UniformDistribution<dimensions, Precision>::UniformDistribution(std::array<std::
 template <int dimensions, typename Precision>
 geometry::Point<dimensions, Precision> UniformDistribution<dimensions, Precision>::operator()()
 {
-	// TODO : Implement operator()
+	std::array<Precision, dimensions> coordinates;
 
-	geometry::Point<dimensions, Precision> p;
+	for (int dimension = 0; dimension < dimensions; ++dimension)
+	{
+		coordinates[dimension] = this->distributions_[dimension](this->generator_);
+	}
 
-	return p;
+	geometry::Point<dimensions, Precision> point(coordinates);
+
+	return point;
 }
 
 } // namespace generator
