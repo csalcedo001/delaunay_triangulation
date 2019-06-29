@@ -1,0 +1,6 @@
+#ifndef DELAUNAY_TRIANGULATION_GEOMETRY_DELAUNAY_TRIANGULATION_QUICK_HULL_HPP_
+#define DELAUNAY_TRIANGULATION_GEOMETRY_DELAUNAY_TRIANGULATION_QUICK_HULL_HPP_
+
+#include "geometry/delaunay_triangulation/quick_hull/quick_hull.hpp"
+
+#endif

@@ -5,7 +5,7 @@ LIB = lib
 BIN = bin
 
 CXX = g++
-GLUTFLAGS = -lGL -lGLU -lGLEW -lglfw3
+LINKFLAGS = -lGL -lGLU -lGLEW -lglfw3
 CXXFLAGS = -std=c++17 -o $@ -I $(INC) -framework OpenGL -lglfw
 
 BINFILES = $(addprefix $(BIN)/, $(basename $(notdir $(wildcard $(SRC)/*.cpp))))
