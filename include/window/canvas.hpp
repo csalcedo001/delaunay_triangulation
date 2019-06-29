@@ -24,24 +24,23 @@ using namespace geometry;
 class Window
 {
 	GLFWwindow *window = nullptr;
-	std::string title;
-	std::vector<Point<3, GLfloat>> points;
+    int width = 600;
+    int height = 600;
+    string title = "Window";
 public:
-	Window(int width, int height, std::string title, std::vector<Point<3, GLfloat>> _points)
+	Window()
 	{
 		glfwInit();
 
 		glfwWindowHint(GLFW_SAMPLES, 4);
 
-		window = glfwCreateWindow( width, height, title.c_str(), NULL, NULL);
+		window = glfwCreateWindow(this->width, this->height, this->title.c_str(), NULL, NULL);
 
 		glfwMakeContextCurrent( window );
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-		
-		this->points = _points;
 	};
 
 	void display()
@@ -67,16 +66,24 @@ public:
 
 			glMatrixMode(GL_MODELVIEW_MATRIX);
 			glTranslatef(0, 0, -5);
-			// glRotatef(alpha, 2, -4, -1);
 			
 			alpha += 1;
 
-			glBegin(GL_POINTS);
+			glBegin(GL_LINES);
+            glVertex3f(0, 0, 0);
+            glVertex3f(0, 1, 0);
 
-			for (auto &p : points)
-			{
-				p.render();
-			}
+            glVertex3f(0, 0, 0);
+            glVertex3f(1, 0, 0);
+
+            glVertex3f(0, 0, 0);
+            glVertex3f(0, 0, 1);
+
+            // glBegin(GL_POINTS);
+			// for (auto &p : points)
+			// {
+			// 	p.render();
+			// }
 
 			glEnd();
 			
