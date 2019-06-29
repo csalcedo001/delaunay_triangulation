@@ -13,7 +13,6 @@ template <int dimensions, typename Precision>
 class UniformDistribution : public Distribution<dimensions, Precision>
 {
 private:
-	// std::default_random_engine generator_;
 	std::vector<std::uniform_real_distribution<double>> distributions_;
 
 public:
