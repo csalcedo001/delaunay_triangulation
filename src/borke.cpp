@@ -250,19 +250,42 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   int max = 10;
   double x, y;
 
-  std::vector<Point<3, GLfloat>> points;
-  std::array<GLfloat, 3> point = {0, 0, 0};
+  vector<Line<Point<3, float>>> lines;
+  vector<Point<3, float>> points;
+  array<float, 3> coordinates;
+  array<Point<3, float>, 2> l_points;
+
   for(int i = 0; i < ntri; i++) 
   {
-    point[0] = p[v[i].p1].x;
-    point[1] = p[v[i].p1].y;
-    points.emplace_back(point);
-    // point[0] = p[v[i].p2].x;
-    // point[1] = p[v[i].p2].y;
-    // points.emplace_back(point);
-    // point[0] = p[v[i].p3].x;
-    // point[1] = p[v[i].p3].y;
-    // points.emplace_back(point);
+    coordinates[0] = p[v[i].p1].x;
+    coordinates[1] = p[v[i].p1].y;
+    coordinates[2] = 0;
+    Point<3, float> p1(coordinates); 
+    points.push_back(p1);
+
+    coordinates[0] = p[v[i].p2].x;
+    coordinates[1] = p[v[i].p2].y;
+    coordinates[2] = 0;
+    Point<3, float> p2(coordinates); 
+    points.push_back(p2);
+
+    coordinates[0] = p[v[i].p3].x;
+    coordinates[1] = p[v[i].p3].y;
+    coordinates[2] = 0;
+    Point<3, float> p3(coordinates); 
+    points.push_back(p3);
+
+    l_points[0] = p1;
+    l_points[1] = p2;
+    lines.emplace_back(l_points);
+
+    l_points[0] = p1;
+    l_points[1] = p3;
+    lines.emplace_back(l_points);
+
+    l_points[0] = p2;
+    l_points[1] = p3;
+    lines.emplace_back(l_points);
 
     cout<<(int)p[v[i].p1].x<<" "<< (int)p[v[i].p1].y<<" "<< (int)p[v[i].p2].x
     <<" "<< (int)p[v[i].p2].y<<"\n";
@@ -272,8 +295,11 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
     <<" "<< (int)p[v[i].p1].y<<"\n";
   }
 
-  Window m(100, 100, "Testing", points);
-	m.display();
+  Window<Point<3, float>> w1(2, points);
+	w1.display();
+
+  Window<Line<Point<3, float>>> w2(1, lines);
+	w2.display();
 }
 
 int main(){
@@ -294,8 +320,8 @@ int main(){
   while (nv != n_MaxPoints){
     do{
       b_Ok = true;
-      x = (double)random(500);
-      y = (double)random(500);
+      x = (double)random(10);
+      y = (double)random(10);
       for(int n_Cpt = 0; n_Cpt <= nv; n_Cpt++){
         if((x == p[n_Cpt].x) && (y == p[n_Cpt].y)) b_Ok = false;
       }// to avoid similar points in the array

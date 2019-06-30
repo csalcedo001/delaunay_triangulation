@@ -8,7 +8,7 @@
 
 const int MaxVertices = 500;
 const int MaxTriangles = 1000;
-const int n_MaxPoints = 10; // for the test programm
+const int n_MaxPoints = 50; // for the test programm
 const double EPSILON = 0.000001;
 
 struct ITRIANGLE{
