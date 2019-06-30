@@ -13,13 +13,20 @@ class Triangulation
 {
 public:
 	typedef std::vector<Point<dimensions, Precision>> PointVector;
-
+	typedef std::vector<Line<Point<dimensions, Precision>>> LineVector;
 protected:
 	PointVector point_vector_;
+	LineVector line_vector_;
 
 public:
 	Triangulation() = default;
+	Triangulation(PointVector point_vector);
 	Triangulation(const Triangulation &triangulation);
+
+	virtual void triangulate();
+
+	PointVector get_points();
+	LineVector get_lines();
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Triangulation<d, P> &triangulation);
