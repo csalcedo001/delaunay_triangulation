@@ -20,13 +20,12 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Point
 {
-private:
-	int id_;
+protected:
 	std::array<Precision, dimensions> coordinates_;
 
 public:
 	Point();
-	Point(const Point<dimensions, Precision> &point);
+	Point(const Point &point);
 	Point(const std::array<Precision, dimensions> coord);
 
 	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&) const;
@@ -37,6 +36,9 @@ public:
 	Precision dotProduct(const Point<dimensions,Precision> &point);
 
 	void render();
+
+	// template <int d, typename P>
+	// friend void render(Point<d, P> point);
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Point<d, P> &point);

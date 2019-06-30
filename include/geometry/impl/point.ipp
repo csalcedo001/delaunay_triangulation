@@ -26,7 +26,7 @@ namespace geometry
 template <int dimensions, typename Precision>
 Point<dimensions, Precision>::Point()
 {
-	// TODO : Assign unique id to point
+
 }
 
 template <int dimensions, typename Precision>
