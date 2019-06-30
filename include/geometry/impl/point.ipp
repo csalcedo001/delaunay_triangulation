@@ -111,6 +111,7 @@ void Point<dimensions, Precision>::render()
 	GLfloat y = dimensions < 2 ? 0 : coordinates_[1];
 	GLfloat z = dimensions < 3 ? 0 : coordinates_[2];
 
+	glColor3f(255, 0, 0);
 	glVertex3f(coordinates_[0], y, z);
 }
 
@@ -135,6 +136,12 @@ std::istream &operator>>(std::istream &is, Point<dimensions, Precision> &point)
 		is >> it;
 
 	return is;
+}
+
+template <int dimensions, typename Precision>
+std::array<Precision, dimensions> Point<dimensions, Precision>::get_coordinates()
+{
+	return this->coordinates_;
 }
 
 } // namespace geometry

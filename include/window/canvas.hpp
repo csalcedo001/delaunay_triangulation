@@ -17,11 +17,12 @@
 #include <GLFW/glfw3.h>
 
 #include <geometry/point.hpp>
+#include <geometry/line.hpp>
 
 using namespace std;
 using namespace geometry;
 
-GLfloat zoom = 5.f;
+GLfloat zoom = 50.f;
 GLfloat alpha = 210.f;
 GLfloat _beta = -70.f;
 
@@ -61,18 +62,21 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
+template <typename Geometry_>
 class Window
 {
 	GLFWwindow *window = nullptr;
-    int width = 600;
-    int height = 600;
+    int width = 640;
+    int height = 640;
+	int mode_ = 0;
     string title = "Window";
 
-	vector<Point<3, float>> points_;
+	vector<Geometry_> geometries_;
 public:
-	Window(vector<Point<3, float>> points)
+	Window(int mode, vector<Geometry_> geometries)
 	{
-		points_ = points;
+		this->mode_ = mode;
+		this->geometries_ = geometries;
 
 		glfwInit();
 
@@ -81,7 +85,13 @@ public:
 		window = glfwCreateWindow(this->width, this->height, this->title.c_str(), NULL, NULL);
 
 		glfwMakeContextCurrent( window );
+		
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_CLAMP);
+
+		glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+		glPointSize(5);
+		
 		glDepthFunc(GL_LEQUAL);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -105,7 +115,7 @@ public:
 			glClearColor(0, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glMatrixMode(GL_PROJECTION_MATRIX);
+			// glMatrixMode(GL_PROJECTION_MATRIX);
 			glLoadIdentity();
 
 			gluPerspective(45, (double) w / (double) h, 0.1, 100);
@@ -116,23 +126,23 @@ public:
 			glRotatef(_beta, 1.0, 0.0, 0.0);
 			glRotatef(alpha, 0.0, 0.0, 1.0);
 			
-			// glBegin(GL_LINES);
-            // glVertex3f(0, 0, 0);
-            // glVertex3f(0, 1, 0);
-
-            // glVertex3f(0, 0, 0);
-            // glVertex3f(1, 0, 0);
-
-            // glVertex3f(0, 0, 0);
-            // glVertex3f(0, 0, 1);
-			// glEnd();
-
-            glBegin(GL_POINTS);
-			for (auto &p : points_)
+			if (this->mode_ == 1) 
 			{
-				p.render();
+				glBegin(GL_LINES);
+				for (auto &it : this->geometries_)
+				{
+					it.render();
+				}
+				glEnd();
+			} else if (this->mode_ == 2)
+			{
+				glBegin(GL_POINTS);
+				for (auto &it : this->geometries_)
+				{
+					it.render();
+				}
+				glEnd();
 			}
-			glEnd();
 			
 			glfwSwapBuffers(window);
 			glfwPollEvents();

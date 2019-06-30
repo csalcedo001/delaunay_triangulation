@@ -44,6 +44,7 @@ public:
 	template <int d, typename P>
 	friend std::istream &operator>>(std::istream &is, Point<d, P> &point);
 	
+	std::array<Precision, dimensions> get_coordinates();
 };
 
 } // namespace geometry
