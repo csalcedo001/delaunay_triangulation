@@ -3,8 +3,8 @@
 
 #include <geometry/point.hpp>
 #include <generator/generator.hpp>
+#include <algorithm/borke.hpp>
 
-using namespace std;
 
 int main (void)
 {
@@ -21,9 +21,9 @@ int main (void)
 	// Window w(points);
 	// w.display();
 
-	generator::NormalDistribution<2, float> point_generator;
+	generator::NormalDistribution<3, float> point_generator;
 
-	std::vector<geometry::Point<2, float>> points;
+	std::vector<geometry::Point<3, float>> points;
 	
 	for (int i = 0; i < 10; i++)
 	{
@@ -32,8 +32,10 @@ int main (void)
 
 	for (int i = 0; i < points.size(); i++)
 	{
-		cout << points[i] << endl;
+		std::cout << points[i] << std::endl;
 	}
+
+	algorithm::Borke<3, float> borke_triangulation(points);
 
 	return 0;
 };
