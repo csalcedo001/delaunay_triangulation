@@ -1,3 +1,11 @@
+/*
+Class for a D-dimensional point
+
+D: Dimensions
+id_: Unique point identifier
+coordinates_: Point coordinates in D-dimentional space
+*/
+
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_POINT_IPP_
 #define DELAUNAY_TRIANGULATION_GEOMETRY_POINT_IPP_
 
@@ -13,12 +21,6 @@
 #include <GL/glut.h>
 #endif
 
-// Class for a D-dimensional point
-// 
-// D: Dimensions
-// id_: Unique point identifier
-// coordinates_: Point coordinates in D-dimentional space
-// 
 
 namespace geometry
 {

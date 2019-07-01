@@ -1,9 +1,19 @@
+/*
+Class for a Triangulation
+
+id_: Unique triangulation identifier
+point_vector_: Vector of points
+line_vector_: Vector of lines
+*/
+
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_TRIANGULATION_HPP_
 #define DELAUNAY_TRIANGULATION_GEOMETRY_TRIANGULATION_HPP_
 
 #include <vector>
 
 #include <geometry/point.hpp>
+#include <geometry/line.hpp>
+
 
 namespace geometry
 {
@@ -14,6 +24,7 @@ class Triangulation
 public:
 	typedef std::vector<Point<dimensions, Precision>> PointVector;
 	typedef std::vector<Line<Point<dimensions, Precision>>> LineVector;
+
 protected:
 	PointVector point_vector_;
 	LineVector line_vector_;

@@ -1,6 +1,8 @@
 #include <iostream>
 
-#include <delaunay_triangulation/borke.hpp>
+#include <geometry.hpp>
+#include <generator/generator.hpp>
+#include <algorithm/borke.hpp>
 #include <window/canvas.hpp>
 
 using namespace std; 
@@ -318,6 +320,7 @@ int main(){
   nv = 0;
   p = new XYZ[max];
   while (nv != n_MaxPoints){
+
     do{
       b_Ok = true;
       x = (double)random(10);
@@ -339,6 +342,7 @@ int main(){
     p[nv].y = y * 1.0;
     nv++;
   }
+
   p_Temp = new XYZ[nv + 3]; 
   for (int i = 0; i < nv; i++) {
     p_Temp[i] = p[i];      
@@ -346,6 +350,7 @@ int main(){
   delete []p;           
   p = p_Temp;
   v = new ITRIANGLE[3 * nv]; 
+
   qsort(p, nv, sizeof(XYZ), XYZCompare);
   Triangulate(nv, p, v, ntri);
   outputtriangle(nv, p, v, ntri); // use this fonction to trace the mesh (via 
