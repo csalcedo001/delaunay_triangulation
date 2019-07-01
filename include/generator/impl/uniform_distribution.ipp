@@ -17,7 +17,7 @@ UniformDistribution<dimensions, Precision>::UniformDistribution() : Distribution
 
 	for (int dimension = 0; dimension < dimensions; ++dimension)
 	{
-		std::uniform_real_distribution current_distribution(-100., 100.);
+		std::uniform_real_distribution<double> current_distribution(-100., 100.);
 
 		this->distributions_[dimension] = current_distribution;
 	}

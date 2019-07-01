@@ -13,7 +13,7 @@ NormalDistribution<dimensions, Precision>::NormalDistribution() : Distribution<d
 
 	for (int dimension = 0; dimension < dimensions; ++dimension)
 	{
-		std::normal_distribution current_distribution(0., 1.);
+		std::normal_distribution<double> current_distribution(0., 1.);
 
 		this->distributions_[dimension] = current_distribution;
 	}
