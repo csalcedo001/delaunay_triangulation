@@ -272,8 +272,6 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   int max = 10;
   double x, y;
 
-  Point<3, float>* point_aux;
-  Line<3, float>* line_aux;
   array<Point<3, float>*, 2> l_points;
   array<float, 3> coordinates;
   vector<Point<3, float>*> points;
@@ -284,35 +282,35 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
     coordinates[0] = p[v[i].p1].x;
     coordinates[1] = p[v[i].p1].y;
     coordinates[2] = p[v[i].p1].z;
-    point_aux = new Point<3, float>(coordinates); 
-    points.push_back(point_aux);
+    Point<3, float>* p1 = new Point<3, float>(coordinates); 
+    points.push_back(p1);
 
     coordinates[0] = p[v[i].p2].x;
     coordinates[1] = p[v[i].p2].y;
     coordinates[2] = p[v[i].p2].z;
-    point_aux = new Point<3, float>(coordinates); 
-    points.push_back(point_aux);
+    Point<3, float>* p2 = new Point<3, float>(coordinates); 
+    points.push_back(p2);
 
     coordinates[0] = p[v[i].p3].x;
     coordinates[1] = p[v[i].p3].y;
     coordinates[2] = p[v[i].p3].z;
-    point_aux = new Point<3, float>(coordinates); 
-    points.push_back(point_aux);
+    Point<3, float>* p3 = new Point<3, float>(coordinates); 
+    points.push_back(p3);
 
-    l_points[0] = points[0];
-    l_points[1] = points[1];
-    line_aux = new Line<3, float>(l_points);
-    lines.push_back(line_aux);
+    l_points[0] = p1;
+    l_points[1] = p2;
+    Line<3, float>* l1 = new Line<3, float>(l_points);
+    lines.push_back(l1);
 
-    l_points[0] = points[0];
-    l_points[1] = points[2];
-    line_aux = new Line<3, float>(l_points);
-    lines.push_back(line_aux);
+    l_points[0] = p1;
+    l_points[1] = p3;
+    Line<3, float>* l2 = new Line<3, float>(l_points);
+    lines.push_back(l2);
 
-    l_points[0] = points[1];
-    l_points[1] = points[2];
-    line_aux = new Line<3, float>(l_points);
-    lines.push_back(line_aux);
+    l_points[0] = p2;
+    l_points[1] = p3;
+    Line<3, float>* l3 = new Line<3, float>(l_points);
+    lines.push_back(l3);
 
     cout<<(int)p[v[i].p1].x<<" "<< (int)p[v[i].p1].y<<" "<< (int)p[v[i].p2].x
     <<" "<< (int)p[v[i].p2].y<<"\n";
