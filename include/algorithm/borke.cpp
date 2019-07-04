@@ -261,19 +261,19 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   {
     coordinates[0] = p[v[i].p1].x;
     coordinates[1] = p[v[i].p1].y;
-    coordinates[2] = 0;
+    coordinates[2] = p[v[i].p1].z;
     Point<3, float> p1(coordinates); 
     points.push_back(p1);
 
     coordinates[0] = p[v[i].p2].x;
     coordinates[1] = p[v[i].p2].y;
-    coordinates[2] = 0;
+    coordinates[2] = p[v[i].p2].z;
     Point<3, float> p2(coordinates); 
     points.push_back(p2);
 
     coordinates[0] = p[v[i].p3].x;
     coordinates[1] = p[v[i].p3].y;
-    coordinates[2] = 0;
+    coordinates[2] = p[v[i].p3].z;
     Point<3, float> p3(coordinates); 
     points.push_back(p3);
 
@@ -323,8 +323,9 @@ int main(){
 
     do{
       b_Ok = true;
-      x = (double)random(10);
-      y = (double)random(10);
+      x = (double)random(500);
+      y = (double)random(500);
+      z = (double)random(10);
       for(int n_Cpt = 0; n_Cpt <= nv; n_Cpt++){
         if((x == p[n_Cpt].x) && (y == p[n_Cpt].y)) b_Ok = false;
       }// to avoid similar points in the array
@@ -340,6 +341,7 @@ int main(){
     }   
     p[nv].x = x * 1.0;
     p[nv].y = y * 1.0;
+    p[nv].z = z * 1.0;
     nv++;
   }
 
