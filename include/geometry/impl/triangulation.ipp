@@ -19,10 +19,12 @@ Triangulation<dimensions, Precision>::Triangulation(PointVector point_vector)
 
 template <int dimensions, typename Precision>
 std::vector<Triangle<dimensions, Precision>> incremental_triangulation()
-{}
+{
+	std::sort(this->point_vector_.begin(), this->point_vector_.end(), point_comparison);
+}
 
 template <int dimensions, typename Precision>
-std::vector<Triangle<dimensions, Precision>>  randomized_incremental_triangulation()
+std::vector<Triangle<dimensions, Precision>> randomized_incremental_triangulation()
 {}
 
 template <int dimensions, typename Precision>
@@ -84,6 +86,14 @@ bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ triangle, Poin
 	dy = yp - ycentre;
 	drsqr = dx * dx + dy * dy;
 	return drsqr <= rsqr;
+}
+
+template <int dimensions, typename Precision>
+bool Triangulation<dimensions, Precision>::point_comparison(Point<dimensions, Precision> p1, Point<dimensions, Precision> p2)
+{
+    auto p1_coord = p1.coordinates_;
+    auto p2_coord = p2.coordinates_;
+    return p1_coord[0] > p2_coord[0];
 }
 
 template <int dimensions, typename Precision>

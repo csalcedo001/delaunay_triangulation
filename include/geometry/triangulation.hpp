@@ -39,6 +39,7 @@ public:
 
 	bool circumcircle(Triangle_ triangle, Point_ point, 
 		Precision &xcentre, Precision &ycentre, Precision &radio);
+	static bool point_comparison(Point_ p1, Point_ p2);
 
 	PointVector get_points();
 };
