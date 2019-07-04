@@ -252,7 +252,7 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   int max = 10;
   double x, y;
 
-  vector<Line<Point<3, float>>> lines;
+  vector<Line<3, float>> lines;
   vector<Point<3, float>> points;
   array<float, 3> coordinates;
   array<Point<3, float>, 2> l_points;
@@ -300,7 +300,7 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   Window<Point<3, float>> w1(2, points);
 	w1.display();
 
-  Window<Line<Point<3, float>>> w2(1, lines);
+  Window<Line<3, float>> w2(1, lines);
 	w2.display();
 }
 

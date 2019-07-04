@@ -25,7 +25,8 @@ class Borke : public Triangulation<dimensions, Precision>
 {
 public:
   typedef std::vector<Point<dimensions, Precision>> PointVector;
-	typedef std::vector<Line<Point<dimensions, Precision>>> LineVector;
+	typedef std::vector<Line<dimensions, Precision>> LineVector;
+  typedef std::vector<Triangle<dimensions, Precision>> TriangleVector;
 
   Borke(PointVector point_vector);
 

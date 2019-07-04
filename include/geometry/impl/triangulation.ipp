@@ -4,6 +4,7 @@ Class for Triangulation
 id_: Unique triangulation identifier
 point_vector_: Vector of points
 line_vector_: Vector of lines
+triangle_vector_: Vector of triangles
 */
 
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_TRIANGULATION_IPP_
@@ -35,13 +36,19 @@ void Triangulation<dimensions, Precision>::triangulate()
 template <int dimensions, typename Precision>
 std::vector<Point<dimensions, Precision>> Triangulation<dimensions, Precision>::get_points()
 {
-	return this->points_vector_;
+	return this->point_vector_;
 }
 
 template <int dimensions, typename Precision>
-std::vector<Line<Point<dimensions, Precision>>> Triangulation<dimensions, Precision>::get_lines()
+std::vector<Line<dimensions, Precision>> Triangulation<dimensions, Precision>::get_lines()
 {
 	return this->line_vector_;
+}
+
+template <int dimensions, typename Precision>
+std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision>::get_triangles()
+{
+	return this->triangle_vector_;
 }
 
 template <int dimensions, typename Precision>

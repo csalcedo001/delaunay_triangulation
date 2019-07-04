@@ -14,27 +14,28 @@ points_: Line points in D-dimentional space
 #include <istream>
 
 #include <geometry/vector.hpp>
+#include <geometry/point.hpp>
 
 
 namespace geometry
 {
 
-template <typename Point_>
+template <int dimensions, typename Precision>
 struct Line
 {
 private:
 	int id_;
-	std::array<Point_, 2> points_;
+	std::array<Point<dimensions, Precision>, 2> points_;
 
 public:
 	Line();
-	Line(const Line<Point_> &line);
-	Line(const std::array<Point_, 2> points);
+	Line(const Line<dimensions, Precision> &line);
+	Line(const std::array<Point<dimensions, Precision>, 2> points);
 
 	void render();
 
-    template <typename P_>
-	friend std::ostream &operator<<(std::ostream &os, const Line<P_> &line);
+    template <int d, typename P_>
+	friend std::ostream &operator<<(std::ostream &os, const Line<d, P_> &line);
 };
 
 } // namespace geometry
