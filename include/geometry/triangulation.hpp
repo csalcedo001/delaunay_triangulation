@@ -1,9 +1,7 @@
 /*
 Class for a Triangulation
 
-id_: Unique triangulation identifier
 point_vector_: Vector of points
-line_vector_: Vector of lines
 triangle_vector_: Vector of triangles
 */
 
@@ -24,29 +22,25 @@ template <int dimensions, typename Precision>
 class Triangulation
 {
 public:
-	typedef std::vector<Point<dimensions, Precision>> PointVector;
-	typedef std::vector<Line<dimensions, Precision>> LineVector;
-	typedef std::vector<Triangle<dimensions, Precision>> TriangleVector;
+	typedef Point<dimensions, Precision> Point_;
+	typedef Triangle<dimensions, Precision> Triangle_;
+	typedef std::vector<Point_> PointVector;
+	typedef std::vector<Triangle_> TriangleVector;
 
 protected:
 	PointVector point_vector_;
-	LineVector line_vector_;
-	TriangleVector triangle_vector_;
 
 public:
 	Triangulation() = default;
 	Triangulation(PointVector point_vector);
-	Triangulation(const Triangulation &triangulation);
 
-	virtual void triangulate();
+	TriangleVector incremental_triangulation();
+	TriangleVector randomized_incremental_triangulation();
 
-	std::vector<Triangle<dimensions, Precision>> get_triangles();
+	bool circumcircle(Triangle_ triangle, Point_ point, 
+		Precision &xcentre, Precision &ycentre, Precision &radio);
 
-	template <int d, typename P>
-	friend std::ostream &operator<<(std::ostream &os, const Triangulation<d, P> &triangulation);
-
-	template <int d, typename P>
-	friend std::istream &operator>>(std::istream &is, const Triangulation<d, P> &triangulation);
+	PointVector get_points();
 };
 
 } // namespace geometry
