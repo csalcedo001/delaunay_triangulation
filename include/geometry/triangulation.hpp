@@ -27,8 +27,8 @@ public:
 	typedef Line<dimensions, Precision> Line_;
 	typedef Triangle<dimensions, Precision> Triangle_;
 	typedef std::vector<Point_*> PointVector;
-	typedef std::vector<Line_> LineVector;
-	typedef std::vector<Triangle_> TriangleVector;
+	typedef std::vector<Line_*> LineVector;
+	typedef std::vector<Triangle_*> TriangleVector;
 
 protected:
 	PointVector point_vector_;
@@ -40,8 +40,8 @@ public:
 	TriangleVector incremental_triangulation();
 	TriangleVector randomized_incremental_triangulation();
 
-	bool circumcircle(Triangle_ triangle, Point_ &point, 
-		Precision &xcentre, Precision &ycentre, Precision &radio);
+	bool circumcircle(Triangle_* triangle, Point_* point, 
+        Precision &xcentre, Precision &ycentre, Precision &radio);
 	static bool point_comparison(Point_* p1, Point_* p2);
 
 	PointVector get_points();
