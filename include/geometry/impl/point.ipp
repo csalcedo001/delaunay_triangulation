@@ -106,9 +106,7 @@ template <int dimensions, typename Precision>
 bool Point<dimensions, Precision>::operator==(const Point<dimensions, Precision> &point)
 {
 	return (this->coordinates_[0] == point.coordinates_[0] 
-		   && this->coordinates_[1] == point.coordinates_[1])
-		   || (this->coordinates_[0] == point.coordinates_[1] 
-		   && this->coordinates_[1] == point.coordinates_[0]);
+		   && this->coordinates_[1] == point.coordinates_[1]);
 }
 
 template <int dimensions, typename Precision>
