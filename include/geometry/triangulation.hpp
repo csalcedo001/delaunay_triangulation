@@ -40,9 +40,8 @@ public:
 
 	virtual void triangulate();
 
-	PointVector get_points();
-	LineVector get_lines();
-	TriangleVector get_triangles();
+	void render_points();
+	void render_triangles();
 
 	template <int d, typename P>
 	friend std::ostream &operator<<(std::ostream &os, const Triangulation<d, P> &triangulation);

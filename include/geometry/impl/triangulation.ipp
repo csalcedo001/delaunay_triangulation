@@ -34,21 +34,21 @@ void Triangulation<dimensions, Precision>::triangulate()
 {}
 
 template <int dimensions, typename Precision>
-std::vector<Point<dimensions, Precision>> Triangulation<dimensions, Precision>::get_points()
+void Triangulation<dimensions, Precision>::render_points()
 {
-	return this->point_vector_;
+	for (auto &i : this->point_vector_)
+	{
+		i.render();
+	}
 }
 
 template <int dimensions, typename Precision>
-std::vector<Line<dimensions, Precision>> Triangulation<dimensions, Precision>::get_lines()
+void Triangulation<dimensions, Precision>::render_triangles()
 {
-	return this->line_vector_;
-}
-
-template <int dimensions, typename Precision>
-std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision>::get_triangles()
-{
-	return this->triangle_vector_;
+	for (auto &i : this->triangle_vector_)
+	{
+		i.render();
+	}
 }
 
 template <int dimensions, typename Precision>
