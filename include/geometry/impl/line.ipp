@@ -47,8 +47,8 @@ Line<dimensions, Precision>::Line(const std::array<Point<dimensions, Precision>,
 template <int dimensions, typename Precision>	
 void Line<dimensions, Precision>::render() 
 {
-	auto a_coord = this->points_[0].get_coordinates();
-    auto b_coord = this->points_[1].get_coordinates();
+	auto a_coord = this->points_[0].coordinates_;
+    auto b_coord = this->points_[1].coordinates_;
 
 	glVertex3f(a_coord[0], a_coord[1], a_coord[2]);
     glVertex3f(b_coord[0], b_coord[1], b_coord[2]);

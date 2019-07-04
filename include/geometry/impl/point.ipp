@@ -140,12 +140,6 @@ std::istream &operator>>(std::istream &is, Point<dimensions, Precision> &point)
 	return is;
 }
 
-template <int dimensions, typename Precision>
-std::array<Precision, dimensions> Point<dimensions, Precision>::get_coordinates()
-{
-	return this->coordinates_;
-}
-
 } // namespace geometry
 
 #endif

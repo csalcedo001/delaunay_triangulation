@@ -34,7 +34,7 @@ template <int dimensions, typename Precision>
 Triangle<dimensions, Precision>::Triangle(const Triangle<dimensions, Precision> &triangle)
 {
 	for (int i = 0; i < 3; ++i) {
-		this->lines_[i] = line.lines_[i];
+		this->lines_[i] = triangle.lines_[i];
 	}
 }
 
@@ -53,9 +53,9 @@ void Triangle<dimensions, Precision>::render()
 }
 
 template <int d, typename P_>
-std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &line)
+std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &triangle)
 {
-	os << line.lines_[0] << " " << line.lines_[1] << " " << line.lines_[2] << "\n";
+	os << triangle.lines_[0] << " " << triangle.lines_[1] << " " << triangle.lines_[2] << "\n";
 	return os;
 }
 

@@ -20,10 +20,8 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Point
 {
-protected:
 	std::array<Precision, dimensions> coordinates_;
 
-public:
 	Point();
 	Point(const Point &point);
 	Point(const std::array<Precision, dimensions> coord);
@@ -45,8 +43,6 @@ public:
 
 	template <int d, typename P>
 	friend std::istream &operator>>(std::istream &is, Point<d, P> &point);
-	
-	std::array<Precision, dimensions> get_coordinates();
 };
 
 } // namespace geometry
