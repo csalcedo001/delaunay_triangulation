@@ -74,11 +74,9 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
     
-	std::cout << "\nProcessing...\n";
 	for (auto point_it = this->point_vector_.begin(); 
 		 point_it != this->point_vector_.end(); ++point_it)
 	{
-		std::cout << (**point_it) << " " << (**point_it).id_ << "\n";
 		if ((**point_it).id_ >= n_points) { break; }
 
 		auto triangle_it = triangulation.begin();
