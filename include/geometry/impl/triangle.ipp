@@ -63,7 +63,7 @@ void Triangle<dimensions, Precision>::render()
 template <int d, typename P_>
 std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &triangle)
 {
-	os << triangle.lines_[0] << " " << triangle.lines_[1] << " " << triangle.lines_[2] << "\n";
+	os << triangle.points_[0] << " " << triangle.points_[1] << " " << triangle.points_[2] << "\n";
 	return os;
 }
 
