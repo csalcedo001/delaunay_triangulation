@@ -26,7 +26,7 @@ void Borke<dimensions, Precision>::triangulate()
 {
 /* 
     Triangulation subroutine
-    Takes as input NV vertices in array pxyz
+    Takes as input n points
     Returned is a list of ntri triangular faces in the array v
     These triangles are arranged in a consistent clockwise order.
     The triangle array 'v' should be malloced to 3 * nv
@@ -35,11 +35,14 @@ void Borke<dimensions, Precision>::triangulate()
 */
     std::sort(this->point_vector_.begin(), this->point_vector_.end(), point_comparison); 
 
-    int nv = this->point_vector_.size(); // size of pxyz
-    XYZ pxyz[100];
+    // pxyz: vector of points
+    // v : vector of triangles
+    // edges : vector of edges
+
+    int n_points = this->point_vector_.size();
 
     int ntri; // size of v
-    ITRIANGLE v[3 * nv];
+    ITRIANGLE v[3 * n_points];
 
     int *complete = NULL;
     IEDGE *edges = NULL; 
@@ -54,7 +57,7 @@ void Borke<dimensions, Precision>::triangulate()
     double dx, dy, dmax; 
 
     /* Allocate memory for the completeness list, flag for each triangle */
-    trimax = 4 * nv;
+    trimax = 4 * n_points;
     complete = new int[trimax];
 
     /* Allocate memory for the edge list */
@@ -66,16 +69,16 @@ void Borke<dimensions, Precision>::triangulate()
         This is to allow calculation of the bounding triangle 
     */
 
-    xmin = pxyz[0].x;
-    ymin = pxyz[0].y;
+    xmin = this->point_vector_[0].coordinates_[0];
+    ymin = this->point_vector_[0].coordinates_[1];
     xmax = xmin;
     ymax = ymin;
-    for(i = 1; i < nv; i++)
+    for(i = 1; i < n_points; i++)
     {
-        if (pxyz[i].x < xmin) xmin = pxyz[i].x;
-        if (pxyz[i].x > xmax) xmax = pxyz[i].x;
-        if (pxyz[i].y < ymin) ymin = pxyz[i].y;
-        if (pxyz[i].y > ymax) ymax = pxyz[i].y;
+        if (this->point_vector_[i].coordinates_[0] < xmin) xmin = this->point_vector_[i].coordinates_[0];
+        if (this->point_vector_[i].coordinates_[0] > xmax) xmax = this->point_vector_[i].coordinates_[0];
+        if (this->point_vector_[i].coordinates_[1] < ymin) ymin = this->point_vector_[i].coordinates_[1];
+        if (this->point_vector_[i].coordinates_[1] > ymax) ymax = this->point_vector_[i].coordinates_[1];
     }
     dx = xmax - xmin;
     dy = ymax - ymin;
@@ -85,30 +88,37 @@ void Borke<dimensions, Precision>::triangulate()
 
     /* 
         Set up the supertriangle
-        his is a triangle which encompasses all the sample points.
+        This is a triangle which encompasses all the sample points.
         The supertriangle coordinates are added to the end of the
         vertex list. The supertriangle is the first triangle in
         the triangle list. 
     */
+    std::array<Precision, dimensions> coord;
 
-    pxyz[nv+0].x = xmid - 20 * dmax;
-    pxyz[nv+0].y = ymid - dmax;
-    pxyz[nv+1].x = xmid;
-    pxyz[nv+1].y = ymid + 20 * dmax;
-    pxyz[nv+2].x = xmid + 20 * dmax;
-    pxyz[nv+2].y = ymid - dmax;
-    v[0].p1 = nv;
-    v[0].p2 = nv+1;
-    v[0].p3 = nv+2;
+    coord[0] = xmid - 20 * dmax;
+    coord[1] = ymid - dmax;
+    this->point_vector_.emplace_back(coord);
+
+    coord[0] = xmid;
+    coord[1] = ymid + 20 * dmax;
+    this->point_vector_.emplace_back(coord);
+
+    coord[0] = xmid + 20 * dmax;
+    coord[1] = ymid - dmax;
+    this->point_vector_.emplace_back(coord);
+
+    v[0].p1 = n_points;
+    v[0].p2 = n_points + 1;
+    v[0].p3 = n_points + 2;
     complete[0] = false;
     ntri = 1;
 
 
     /* Include each point one at a time into the existing mesh */
-    for(i = 0; i < nv; i++) // for each point
+    for(i = 0; i < n_points; i++) // for each point
     {
-        xp = pxyz[i].x;
-        yp = pxyz[i].y;
+        xp = this->point_vector_[i].coordinates_[0];
+        yp = this->point_vector_[i].coordinates_[1];
         nedge = 0;
         
         /*
@@ -121,12 +131,14 @@ void Borke<dimensions, Precision>::triangulate()
         for(j = 0; j < ntri; j++)
         {
             if (complete[j]) continue;
-            x1 = pxyz[v[j].p1].x;
-            y1 = pxyz[v[j].p1].y;
-            x2 = pxyz[v[j].p2].x;
-            y2 = pxyz[v[j].p2].y;
-            x3 = pxyz[v[j].p3].x;
-            y3 = pxyz[v[j].p3].y;
+
+            x1 = this->point_vector_[v[j].p1].coordinates_[0];
+            y1 = this->point_vector_[v[j].p1].coordinates_[1];
+            x2 = this->point_vector_[v[j].p2].coordinates_[0];
+            y2 = this->point_vector_[v[j].p2].coordinates_[1];
+            x3 = this->point_vector_[v[j].p3].coordinates_[0];
+            y3 = this->point_vector_[v[j].p3].coordinates_[1];
+
             inside = this->circumcircle(xp, yp, x1, y1, x2, y2, x3, y3, xc, yc, r);
             if (xc + r < xp)
             {
@@ -146,6 +158,7 @@ void Borke<dimensions, Precision>::triangulate()
                     delete []edges;
                     edges = p_EdgeTemp;
                 }
+                
                 edges[nedge+0].p1 = v[j].p1;
                 edges[nedge+0].p2 = v[j].p2;
                 edges[nedge+1].p1 = v[j].p2;
@@ -209,12 +222,12 @@ void Borke<dimensions, Precision>::triangulate()
 
     /*
         Remove triangles with supertriangle vertices
-        These are triangles which have a vertex number greater than nv
+        These are triangles which have a vertex number greater than n_points
     */
     
     for(i = 0; i < ntri; i++) 
     {
-        if (v[i].p1 >= nv || v[i].p2 >= nv || v[i].p3 >= nv) 
+        if (v[i].p1 >= n_points || v[i].p2 >= n_points || v[i].p3 >= n_points) 
         {
             v[i] = v[ntri-1];
             ntri--;
@@ -286,8 +299,8 @@ double y2, double x3, double y3, double &xc, double &yc, double &r)
 template <int dimensions, typename Precision>
 bool Borke<dimensions, Precision>::point_comparison(Point<dimensions, Precision> p1, Point<dimensions, Precision> p2)
 {
-    auto p1_coord = p1.get_coordinates();
-    auto p2_coord = p2.get_coordinates();
+    auto p1_coord = p1.coordinates_;
+    auto p2_coord = p2.coordinates_;
     return p1_coord[0] > p2_coord[0];
 }
 
