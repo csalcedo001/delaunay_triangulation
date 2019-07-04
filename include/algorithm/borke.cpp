@@ -1,11 +1,31 @@
-#include <iostream>
-
 #include <geometry.hpp>
 #include <generator/generator.hpp>
-#include <algorithm/borke.hpp>
 #include <window/canvas.hpp>
 
+#include <iostream>
+#include <stdlib.h> // for C qsort 
+#include <cmath>
+#include <time.h> // for random
+
+
 using namespace std; 
+
+const int MaxVertices = 500;
+const int MaxTriangles = 1000;
+const int n_MaxPoints = 10; // for the test programm
+const double EPSILON = 0.000001;
+
+struct ITRIANGLE{
+  int p1, p2, p3;
+};
+
+struct IEDGE{
+  int p1, p2;
+};
+
+struct XYZ{
+  double x, y, z;
+};
 
 ////////////////////////////////////////////////////////////////////////
 // CircumCircle() :
@@ -252,42 +272,47 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   int max = 10;
   double x, y;
 
-  vector<Line<3, float>> lines;
-  vector<Point<3, float>> points;
+  Point<3, float>* point_aux;
+  Line<3, float>* line_aux;
+  array<Point<3, float>*, 2> l_points;
   array<float, 3> coordinates;
-  array<Point<3, float>, 2> l_points;
+  vector<Point<3, float>*> points;
+  vector<Line<3, float>*> lines;
 
   for(int i = 0; i < ntri; i++) 
   {
     coordinates[0] = p[v[i].p1].x;
     coordinates[1] = p[v[i].p1].y;
     coordinates[2] = p[v[i].p1].z;
-    Point<3, float> p1(coordinates); 
-    points.push_back(p1);
+    point_aux = new Point<3, float>(coordinates); 
+    points.push_back(point_aux);
 
     coordinates[0] = p[v[i].p2].x;
     coordinates[1] = p[v[i].p2].y;
     coordinates[2] = p[v[i].p2].z;
-    Point<3, float> p2(coordinates); 
-    points.push_back(p2);
+    point_aux = new Point<3, float>(coordinates); 
+    points.push_back(point_aux);
 
     coordinates[0] = p[v[i].p3].x;
     coordinates[1] = p[v[i].p3].y;
     coordinates[2] = p[v[i].p3].z;
-    Point<3, float> p3(coordinates); 
-    points.push_back(p3);
+    point_aux = new Point<3, float>(coordinates); 
+    points.push_back(point_aux);
 
-    l_points[0] = p1;
-    l_points[1] = p2;
-    lines.emplace_back(l_points);
+    l_points[0] = points[0];
+    l_points[1] = points[1];
+    line_aux = new Line<3, float>(l_points);
+    lines.push_back(line_aux);
 
-    l_points[0] = p1;
-    l_points[1] = p3;
-    lines.emplace_back(l_points);
+    l_points[0] = points[0];
+    l_points[1] = points[2];
+    line_aux = new Line<3, float>(l_points);
+    lines.push_back(line_aux);
 
-    l_points[0] = p2;
-    l_points[1] = p3;
-    lines.emplace_back(l_points);
+    l_points[0] = points[1];
+    l_points[1] = points[2];
+    line_aux = new Line<3, float>(l_points);
+    lines.push_back(line_aux);
 
     cout<<(int)p[v[i].p1].x<<" "<< (int)p[v[i].p1].y<<" "<< (int)p[v[i].p2].x
     <<" "<< (int)p[v[i].p2].y<<"\n";

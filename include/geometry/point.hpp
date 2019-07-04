@@ -2,6 +2,7 @@
 #define DELAUNAY_TRIANGULATION_GEOMETRY_POINT_HPP_
 
 #include <array>
+#include <iostream>
 #include <ostream>
 #include <istream>
 
