@@ -40,9 +40,9 @@ public:
 	TriangleVector incremental_triangulation();
 	TriangleVector randomized_incremental_triangulation();
 
-	bool circumcircle(Triangle_* triangle, Point_* point, 
+	bool circumcircle(Triangle_ *triangle, Point_ *point, 
         Precision &xcentre, Precision &ycentre, Precision &radio);
-	static bool point_comparison(Point_* p1, Point_* p2);
+	static int point_comparison(Point_* p1, Point_* p2);
 
 	PointVector get_points();
 };

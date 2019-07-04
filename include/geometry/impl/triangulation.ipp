@@ -21,7 +21,6 @@ template <int dimensions, typename Precision>
 std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precision>::incremental_triangulation()
 {
 	TriangleVector triangulation;
-	LineVector edges;
 
 	/* Get bounds */
 	Precision xmin, ymin, xmax, ymax, dx, dy, dmax, xmid, ymid;
@@ -29,10 +28,18 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 	
 	std::sort(this->point_vector_.begin(), this->point_vector_.end(), point_comparison);
 
-	xmin = this->point_vector_.front()->coordinates_[0];
-    ymin = this->point_vector_.front()->coordinates_[1];
-    xmax = this->point_vector_.back()->coordinates_[0];
-    ymax = this->point_vector_.back()->coordinates_[1];
+	xmin = this->point_vector_[0]->coordinates_[0];
+    ymin = this->point_vector_[0]->coordinates_[1];
+    xmax = xmax;
+    ymax = ymin;
+
+	for (auto point_it = this->point_vector_.begin(); 
+		 point_it != this->point_vector_.end(); ++point_it)
+	{
+        if ((*point_it)->coordinates_[0] > xmax) { xmax = (*point_it)->coordinates_[0]; }
+        if ((*point_it)->coordinates_[1] < ymin) { ymin = (*point_it)->coordinates_[1]; }
+        if ((*point_it)->coordinates_[1] > ymax) { ymax = (*point_it)->coordinates_[1]; }
+    }
 
 	dx = xmax - xmin;
 	dy = ymax - ymin;
@@ -73,11 +80,15 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 	Line_* line_aux;
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
+	Line_ edges[1000];
+	int n_edges;
     
 	for (auto point_it = this->point_vector_.begin(); 
 		 point_it != this->point_vector_.end(); ++point_it)
 	{
 		if ((*point_it)->id_ >= n_points) { break; }
+
+		n_edges = 0;
 
 		auto triangle_it = triangulation.begin();
 		while (triangle_it != triangulation.end())
@@ -86,7 +97,7 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 
 			in_circumcircle = this->circumcircle((*triangle_it), (*point_it), 
 				xcentre, ycentre, radio);
-			if (xcentre + radio < (**point_it).coordinates_[0])
+			if (xcentre + radio < (*point_it)->coordinates_[0])
 			{
 				(*triangle_it)->checked = true;
 			}
@@ -94,18 +105,17 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 			{
 				pair[0] = (*triangle_it)->points_[0];
 				pair[1] = (*triangle_it)->points_[1];
-				line_aux = new Line_(pair);
-				edges.push_back(line_aux);
+				edges[n_edges] = Line_(pair);
 
 				pair[0] = (*triangle_it)->points_[0];
 				pair[1] = (*triangle_it)->points_[2];
-				line_aux = new Line_(pair);
-				edges.push_back(line_aux);
+				edges[n_edges + 1] = Line_(pair);
 
 				pair[0] = (*triangle_it)->points_[1];
 				pair[1] = (*triangle_it)->points_[2];
-				line_aux = new Line_(pair);
-				edges.push_back(line_aux);
+				edges[n_edges + 2] = Line_(pair);
+				
+				n_edges += 3;
 
 				triangle_it = triangulation.erase(triangle_it);
 			} else
@@ -114,29 +124,35 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 			}
 		}
 
-		for (int i = 0; i < edges.size() - 1; ++i)
+		for (int i = 0; i < n_edges - 1; ++i)
 		{
-			for (int j = i + 1; j < edges.size(); ++j)
+			for (int j = i + 1; j < n_edges; ++j)
 			{
-				if ((edges[i]->points_[0] == edges[j]->points_[1]) 
-					&& (edges[i]->points_[1] == edges[j]->points_[0]))
+				if ((edges[i].points_[0] == edges[j].points_[1]) 
+					&& (edges[i].points_[1] == edges[j].points_[0]))
 				{
-					edges[i]->points_[0]->id_ = -1;
-					edges[i]->points_[1]->id_ = -1;
-					edges[j]->points_[0]->id_ = -1;
-					edges[j]->points_[1]->id_ = -1;
+					edges[i].points_[1]->id_ = -1;
+					edges[i].points_[0]->id_ = -1;
+					edges[j].points_[1]->id_ = -1;
+					edges[j].points_[0]->id_ = -1;
+				}
+				if ((edges[i].points_[0] == edges[j].points_[0]) 
+					&& (edges[i].points_[1] == edges[j].points_[1]))
+				{
+					edges[i].points_[1]->id_ = -1;
+					edges[i].points_[0]->id_ = -1;
+					edges[j].points_[1]->id_ = -1;
+					edges[j].points_[0]->id_ = -1;
 				}
 			}
 		}
-
-		for (auto line_it = edges.begin(); 
-			 line_it != edges.end(); ++line_it)
+		
+		for (int i = 0; i < n_edges; ++i)
 		{
-			if ((*line_it)->points_[0]->id_ < 0 
-				|| (*line_it)->points_[1]->id_ < 0) { continue; }
+			if (edges[i].points_[0]->id_ == -1) { continue; }
 			
-			points[0] = (*line_it)->points_[0];
-			points[1] = (*line_it)->points_[1];
+			points[0] = edges[i].points_[0];
+			points[1] = edges[i].points_[1];
 			points[2] = (*point_it);
 
 			triangle = new Triangle_(points);
@@ -144,6 +160,7 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 		}
 	}
 
+	/* Delete supertriangle edges */
 	auto triangle_it = triangulation.begin();
 	while (triangle_it != triangulation.end())
 	{
@@ -166,7 +183,7 @@ std::vector<Triangle<dimensions, Precision>> randomized_incremental_triangulatio
 {}
 
 template <int dimensions, typename Precision>
-bool Triangulation<dimensions, Precision>::circumcircle(Triangle_* triangle, Point_* point, 
+bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ *triangle, Point_ *point, 
 	Precision &xcentre, Precision &ycentre, Precision &radio)
 {
 	const double EPSILON = 0.000001;
@@ -227,11 +244,13 @@ bool Triangulation<dimensions, Precision>::circumcircle(Triangle_* triangle, Poi
 }
 
 template <int dimensions, typename Precision>
-bool Triangulation<dimensions, Precision>::point_comparison(Point<dimensions, Precision>* p1, Point<dimensions, Precision>* p2)
+int Triangulation<dimensions, Precision>::point_comparison(Point<dimensions, Precision>* p1, Point<dimensions, Precision>* p2)
 {
     auto p1_coord = p1->coordinates_;
     auto p2_coord = p2->coordinates_;
-    return p1_coord[0] > p2_coord[0];
+	if (p1_coord[0] < p2_coord[0]) { return -1;}
+	else if (p1_coord[0] > p2_coord[0]) {return 1;}
+    else {return 0;}
 }
 
 template <int dimensions, typename Precision>
