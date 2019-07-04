@@ -39,16 +39,16 @@ Triangle<dimensions, Precision>::Triangle(const Triangle<dimensions, Precision> 
 }
 
 template <int dimensions, typename Precision>
-Triangle<dimensions, Precision>::Triangle(const std::array<Point<dimensions, Precision>, 3> points)
+Triangle<dimensions, Precision>::Triangle(const std::array<Point<dimensions, Precision>*, 3> points)
 : points_(points)
 {}
 
 template <int dimensions, typename Precision>	
 void Triangle<dimensions, Precision>::render() 
 {
-	auto a_coord = this->points_[0].coordinates_;
-    auto b_coord = this->points_[1].coordinates_;
-	auto c_coord = this->points_[2].coordinates_;
+	auto a_coord = this->points_[0]->coordinates_;
+    auto b_coord = this->points_[1]->coordinates_;
+	auto c_coord = this->points_[2]->coordinates_;
 
 	glVertex3f(a_coord[0], a_coord[1], a_coord[2]);
     glVertex3f(b_coord[0], b_coord[1], b_coord[2]);
@@ -75,7 +75,7 @@ Triangle<dimensions, Precision>& Triangle<dimensions, Precision>::operator=(cons
 template <int d, typename P_>
 std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &triangle)
 {
-	os << triangle.points_[0] << " " << triangle.points_[1] << " " << triangle.points_[2] << "\n";
+	os << *triangle.points_[0] << " " << *triangle.points_[1] << " " << *triangle.points_[2] << "\n";
 	return os;
 }
 

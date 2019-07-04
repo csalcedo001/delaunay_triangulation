@@ -24,11 +24,11 @@ template <int dimensions, typename Precision>
 struct Line
 {
 	int id_ = 1;
-	std::array<Point<dimensions, Precision>, 2> points_;
+	std::array<Point<dimensions, Precision>*, 2> points_;
 
 	Line();
 	Line(const Line<dimensions, Precision> &line);
-	Line(const std::array<Point<dimensions, Precision>, 2> points);
+	Line(const std::array<Point<dimensions, Precision>*, 2> points);
 
 	void render();
 

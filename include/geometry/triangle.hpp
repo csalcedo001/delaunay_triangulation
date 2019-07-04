@@ -22,12 +22,12 @@ template <int dimensions, typename Precision>
 struct Triangle
 {
 	int id_;
-	std::array<Point<dimensions, Precision>, 3> points_;
+	std::array<Point<dimensions, Precision>*, 3> points_;
 	bool checked = false;
 
 	Triangle();
 	Triangle(const Triangle<dimensions, Precision> &triangle);
-	Triangle(const std::array<Point<dimensions, Precision>, 3> points);
+	Triangle(const std::array<Point<dimensions, Precision>*, 3> points);
 
 	void render();
 

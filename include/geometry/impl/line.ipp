@@ -40,15 +40,15 @@ Line<dimensions, Precision>::Line(const Line<dimensions, Precision> &line)
 }
 
 template <int dimensions, typename Precision>
-Line<dimensions, Precision>::Line(const std::array<Point<dimensions, Precision>, 2> points)
+Line<dimensions, Precision>::Line(const std::array<Point<dimensions, Precision>*, 2> points)
 : points_(points)
 {}
 
 template <int dimensions, typename Precision>	
 void Line<dimensions, Precision>::render() 
 {
-	auto a_coord = this->points_[0].coordinates_;
-    auto b_coord = this->points_[1].coordinates_;
+	auto a_coord = this->points_[0]->coordinates_;
+    auto b_coord = this->points_[1]->coordinates_;
 
 	glVertex3f(a_coord[0], a_coord[1], a_coord[2]);
     glVertex3f(b_coord[0], b_coord[1], b_coord[2]);
@@ -71,7 +71,7 @@ Line<dimensions, Precision>& Line<dimensions, Precision>::operator=(const Line<d
 template <int d, typename P_>
 std::ostream &operator<<(std::ostream &os, const Line<d, P_> &line)
 {
-	os << line.points_[0] << " " << line.points_[1] << "\n";
+	os << *line.points_[0] << " " << *line.points_[1] << "\n";
 	return os;
 }
 

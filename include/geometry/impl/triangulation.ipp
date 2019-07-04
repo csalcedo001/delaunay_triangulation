@@ -42,7 +42,7 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 
 	/* Set up supertriangle */
 	std::array<Precision, dimensions> coord;
-	std::array<Point_, 3> points;
+	std::array<Point_*, 3> points;
 	Point_* point_aux = nullptr;
 	Triangle_ triangle;
     coord[2] = 0;
@@ -50,26 +50,26 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	coord[0] = xmid - 20 * dmax;
     coord[1] = ymid - dmax;
    	point_aux = new Point_(n_points, coord);
-    points[0] = *point_aux;
+    points[0] = point_aux;
     this->point_vector_.push_back(point_aux);
 
 	coord[0] = xmid;
     coord[1] = ymid + 20 * dmax;
     point_aux = new Point_(n_points, coord);
-    points[1] = *point_aux;
+    points[1] = point_aux;
     this->point_vector_.push_back(point_aux);
 
     coord[0] = xmid + 20 * dmax;
     coord[1] = ymid - dmax;
     point_aux = new Point_(n_points, coord);
-    points[2] = *point_aux;
+    points[2] = point_aux;
     this->point_vector_.push_back(point_aux);
 
 	triangle = Triangle_(points);
 	triangulation.push_back(triangle);
 
 	/* Include each point one at a time into the existing mesh */
-	std::array<Point_, 2> pair;
+	std::array<Point_*, 2> pair;
 	Line_ line_aux;
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
@@ -77,7 +77,7 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	for (auto point_it = this->point_vector_.begin(); 
 		 point_it != this->point_vector_.end(); ++point_it)
 	{
-		if ((**point_it).id_ >= n_points) { break; }
+		if ((*point_it)->id_ >= n_points) { break; }
 
 		auto triangle_it = triangulation.begin();
 		while (triangle_it != triangulation.end())
@@ -121,10 +121,10 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 				if ((edges[i].points_[0] == edges[j].points_[1]) 
 					&& (edges[i].points_[1] == edges[j].points_[0]))
 				{
-					edges[i].points_[0].id_ = -1;
-					edges[i].points_[1].id_ = -1;
-					edges[j].points_[0].id_ = -1;
-					edges[j].points_[1].id_ = -1;
+					edges[i].points_[0]->id_ = -1;
+					edges[i].points_[1]->id_ = -1;
+					edges[j].points_[0]->id_ = -1;
+					edges[j].points_[1]->id_ = -1;
 				}
 			}
 		}
@@ -132,12 +132,12 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 		for (auto line_it = edges.begin(); 
 			 line_it != edges.end(); ++line_it)
 		{
-			if ((*line_it).points_[0].id_ < 0 
-				|| (*line_it).points_[1].id_ < 0) { continue; }
+			if ((*line_it).points_[0]->id_ < 0 
+				|| (*line_it).points_[1]->id_ < 0) { continue; }
 			
 			points[0] = (*line_it).points_[0];
 			points[1] = (*line_it).points_[1];
-			points[2] = (**point_it);
+			points[2] = (*point_it);
 
 			triangle = Triangle_(points);
 			triangulation.push_back(triangle);
@@ -147,9 +147,9 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	auto triangle_it = triangulation.begin();
 	while (triangle_it != triangulation.end())
 	{
-		if ((*triangle_it).points_[0].id_ >= n_points 
-            || (*triangle_it).points_[1].id_ >= n_points 
-            || (*triangle_it).points_[2].id_ >= n_points) 
+		if ((*triangle_it).points_[0]->id_ >= n_points 
+            || (*triangle_it).points_[1]->id_ >= n_points 
+            || (*triangle_it).points_[2]->id_ >= n_points) 
 		{
 			triangle_it = triangulation.erase(triangle_it);
 		} else
@@ -177,12 +177,12 @@ bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ triangle, Poin
 	xp = point.coordinates_[0];
 	yp = point.coordinates_[1];
 
-	x1 = triangle.points_[0].coordinates_[0];
-	y1 = triangle.points_[0].coordinates_[1];
-	x2 = triangle.points_[1].coordinates_[0];
-	y2 = triangle.points_[1].coordinates_[1];
-	x3 = triangle.points_[2].coordinates_[0];
-	y3 = triangle.points_[2].coordinates_[1];
+	x1 = triangle.points_[0]->coordinates_[0];
+	y1 = triangle.points_[0]->coordinates_[1];
+	x2 = triangle.points_[1]->coordinates_[0];
+	y2 = triangle.points_[1]->coordinates_[1];
+	x3 = triangle.points_[2]->coordinates_[0];
+	y3 = triangle.points_[2]->coordinates_[1];
 	
 	/* Check for coincident points */
 	if(abs(y1 - y2) < EPSILON && abs(y2 - y3) < EPSILON) 
