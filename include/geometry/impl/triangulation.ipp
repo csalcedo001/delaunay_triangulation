@@ -50,34 +50,31 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 	/* Set up supertriangle */
 	std::array<Precision, dimensions> coord;
 	std::array<Point_*, 3> points;
-	Point_* point_aux = nullptr;
-	Triangle_* triangle;
     coord[2] = 0;
 	
 	coord[0] = xmid - 20 * dmax;
     coord[1] = ymid - dmax;
-   	point_aux = new Point_(n_points, coord);
-    points[0] = point_aux;
-    this->point_vector_.push_back(point_aux);
+   	Point_* p1 = new Point_(n_points, coord);
+    points[0] = p1;
+    this->point_vector_.push_back(p1);
 
 	coord[0] = xmid;
     coord[1] = ymid + 20 * dmax;
-    point_aux = new Point_(n_points, coord);
-    points[1] = point_aux;
-    this->point_vector_.push_back(point_aux);
+    Point_* p2 = new Point_(n_points, coord);
+    points[1] = p2;
+    this->point_vector_.push_back(p2);
 
     coord[0] = xmid + 20 * dmax;
     coord[1] = ymid - dmax;
-    point_aux = new Point_(n_points, coord);
-    points[2] = point_aux;
-    this->point_vector_.push_back(point_aux);
+    Point_* p3 = new Point_(n_points, coord);
+    points[2] = p3;
+    this->point_vector_.push_back(p3);
 
-	triangle = new Triangle_(points);
-	triangulation.push_back(triangle);
+	Triangle_* supertriangle = new Triangle_(points);
+	triangulation.push_back(supertriangle);
 
 	/* Include each point one at a time into the existing mesh */
 	std::array<Point_*, 2> pair;
-	Line_* line_aux;
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
 	Line_ edges[1000];
@@ -155,7 +152,7 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 			points[1] = edges[i].points_[1];
 			points[2] = (*point_it);
 
-			triangle = new Triangle_(points);
+			Triangle_* triangle = new Triangle_(points);
 			triangulation.push_back(triangle);
 		}
 	}
