@@ -23,16 +23,16 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Line
 {
-private:
-	int id_;
+	int id_ = 1;
 	std::array<Point<dimensions, Precision>, 2> points_;
 
-public:
 	Line();
 	Line(const Line<dimensions, Precision> &line);
 	Line(const std::array<Point<dimensions, Precision>, 2> points);
 
 	void render();
+
+	Line<dimensions, Precision>& operator=(const Line<dimensions, Precision> &line);
 
     template <int d, typename P_>
 	friend std::ostream &operator<<(std::ostream &os, const Line<d, P_> &line);

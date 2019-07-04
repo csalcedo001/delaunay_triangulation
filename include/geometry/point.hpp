@@ -20,17 +20,21 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Point
 {
+	int id_ = 0;
 	std::array<Precision, dimensions> coordinates_;
 
 	Point();
 	Point(const Point &point);
 	Point(const std::array<Precision, dimensions> coord);
+	Point(int id, const std::array<Precision, dimensions> coord);
 
 	Point<dimensions, Precision> operator+(const Point<dimensions, Precision>&) const;
 	Point<dimensions, Precision> operator-(const Point<dimensions, Precision>&) const;
 
 	Point<dimensions, Precision> operator*(const Precision &scalar);
 	Point<dimensions, Precision>& operator=(const Point<dimensions, Precision> &point);
+	bool operator==(const Point<dimensions, Precision> &point);
+
 	Precision dotProduct(const Point<dimensions,Precision> &point);
 
 	void render();

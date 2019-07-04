@@ -60,6 +60,18 @@ void Triangle<dimensions, Precision>::render()
 	glVertex3f(c_coord[0], c_coord[1], c_coord[2]);
 }
 
+template <int dimensions, typename Precision>
+Triangle<dimensions, Precision>& Triangle<dimensions, Precision>::operator=(const Triangle<dimensions, Precision> &triangle)
+{
+	if (this == &triangle)	return *this;
+
+	for(int i = 0; i < dimensions; ++i) {
+		this->points_[i] = triangle.points_[i];
+	}
+
+	return *this;
+}
+
 template <int d, typename P_>
 std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &triangle)
 {

@@ -28,7 +28,7 @@ namespace geometry
 template <int dimensions, typename Precision>
 Point<dimensions, Precision>::Point()
 {
-
+	// TODO : Assign unique id to line
 }
 
 template <int dimensions, typename Precision>
@@ -42,6 +42,11 @@ Point<dimensions, Precision>::Point(const Point<dimensions, Precision> &point)
 template <int dimensions, typename Precision>
 Point<dimensions, Precision>::Point(const std::array<Precision, dimensions> coord)
 	: coordinates_(coord)
+{}
+
+template <int dimensions, typename Precision>
+Point<dimensions, Precision>::Point(int id, const std::array<Precision, dimensions> coord)
+	: id_(id), coordinates_(coord)
 {}
 
 template <int dimensions, typename Precision>
@@ -88,13 +93,22 @@ Point<dimensions, Precision> operator*(Precision scalar, const Point<dimensions,
 template <int dimensions, typename Precision>
 Point<dimensions, Precision>& Point<dimensions, Precision>::operator=(const Point<dimensions, Precision> &point)
 {
-	if (this == &point)	return *this;
-
 	for(int i = 0; i<dimensions; ++i) {
-		coordinates_[i] = point.coordinates_[i];
+		this->coordinates_[i] = point.coordinates_[i];
 	}
 
+	this->id_ = point.id_;
+
 	return *this;
+}
+
+template <int dimensions, typename Precision>
+bool Point<dimensions, Precision>::operator==(const Point<dimensions, Precision> &point)
+{
+	return (this->coordinates_[0] == point.coordinates_[0] 
+		   && this->coordinates_[1] == point.coordinates_[1])
+		   || (this->coordinates_[0] == point.coordinates_[1] 
+		   && this->coordinates_[1] == point.coordinates_[0]);
 }
 
 template <int dimensions, typename Precision>

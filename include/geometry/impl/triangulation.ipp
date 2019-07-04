@@ -29,10 +29,10 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	
 	std::sort(this->point_vector_.begin(), this->point_vector_.end(), point_comparison);
 
-	xmin = this->point_vector_.front().coordinates_[0];
-    ymin = this->point_vector_.front().coordinates_[1];
-    xmax = this->point_vector_.back().coordinates_[0];
-    ymax = this->point_vector_.back().coordinates_[1];
+	xmin = this->point_vector_.front()->coordinates_[0];
+    ymin = this->point_vector_.front()->coordinates_[1];
+    xmax = this->point_vector_.back()->coordinates_[0];
+    ymax = this->point_vector_.back()->coordinates_[1];
 
 	dx = xmax - xmin;
 	dy = ymax - ymin;
@@ -43,25 +43,26 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	/* Set up supertriangle */
 	std::array<Precision, dimensions> coord;
 	std::array<Point_, 3> points;
-	Point_ point_aux;
+	Point_* point_aux = nullptr;
 	Triangle_ triangle;
-
+    coord[2] = 0;
+	
 	coord[0] = xmid - 20 * dmax;
     coord[1] = ymid - dmax;
-   	point_aux = Point_(n_points, coord);
-    points[0] = point_aux;
+   	point_aux = new Point_(n_points, coord);
+    points[0] = *point_aux;
     this->point_vector_.push_back(point_aux);
 
 	coord[0] = xmid;
     coord[1] = ymid + 20 * dmax;
-    point_aux = Point_(n_points + 1, coord);
-    points[1] = point_aux;
+    point_aux = new Point_(n_points, coord);
+    points[1] = *point_aux;
     this->point_vector_.push_back(point_aux);
 
     coord[0] = xmid + 20 * dmax;
     coord[1] = ymid - dmax;
-    point_aux = Point_(n_points + 2, coord);
-    points[2] = point_aux;
+    point_aux = new Point_(n_points, coord);
+    points[2] = *point_aux;
     this->point_vector_.push_back(point_aux);
 
 	triangle = Triangle_(points);
@@ -72,21 +73,22 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 	Line_ line_aux;
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
-
+    
+	std::cout << "\nProcessing...\n";
 	for (auto point_it = this->point_vector_.begin(); 
 		 point_it != this->point_vector_.end(); ++point_it)
 	{
-		std::cout << (*point_it) << "\n";
-		if ((*point_it).id_ >= n_points) { break; }
+		std::cout << (**point_it) << " " << (**point_it).id_ << "\n";
+		if ((**point_it).id_ >= n_points) { break; }
 
 		auto triangle_it = triangulation.begin();
 		while (triangle_it != triangulation.end())
 		{
 			if ((*triangle_it).checked) { continue; }
 
-			in_circumcircle = this->circumcircle((*triangle_it), (*point_it), 
+			in_circumcircle = this->circumcircle((*triangle_it), (**point_it), 
 				xcentre, ycentre, radio);
-			if (xcentre + radio < (*point_it).coordinates_[0])
+			if (xcentre + radio < (**point_it).coordinates_[0])
 			{
 				(*triangle_it).checked = true;
 			}
@@ -137,7 +139,7 @@ std::vector<Triangle<dimensions, Precision>> Triangulation<dimensions, Precision
 			
 			points[0] = (*line_it).points_[0];
 			points[1] = (*line_it).points_[1];
-			points[2] = (*point_it);
+			points[2] = (**point_it);
 
 			triangle = Triangle_(points);
 			triangulation.push_back(triangle);
@@ -166,7 +168,7 @@ std::vector<Triangle<dimensions, Precision>> randomized_incremental_triangulatio
 {}
 
 template <int dimensions, typename Precision>
-bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ triangle, Point_ point, 
+bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ triangle, Point_ &point, 
 	Precision &xcentre, Precision &ycentre, Precision &radio)
 {
 	const double EPSILON = 0.000001;
@@ -227,15 +229,15 @@ bool Triangulation<dimensions, Precision>::circumcircle(Triangle_ triangle, Poin
 }
 
 template <int dimensions, typename Precision>
-bool Triangulation<dimensions, Precision>::point_comparison(Point<dimensions, Precision> p1, Point<dimensions, Precision> p2)
+bool Triangulation<dimensions, Precision>::point_comparison(Point<dimensions, Precision>* p1, Point<dimensions, Precision>* p2)
 {
-    auto p1_coord = p1.coordinates_;
-    auto p2_coord = p2.coordinates_;
+    auto p1_coord = p1->coordinates_;
+    auto p2_coord = p2->coordinates_;
     return p1_coord[0] > p2_coord[0];
 }
 
 template <int dimensions, typename Precision>
-std::vector<Point<dimensions, Precision>> Triangulation<dimensions, Precision>::get_points()
+std::vector<Point<dimensions, Precision>*> Triangulation<dimensions, Precision>::get_points()
 {
 	return this->point_vector_;
 }

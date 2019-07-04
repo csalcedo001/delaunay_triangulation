@@ -54,6 +54,20 @@ void Line<dimensions, Precision>::render()
     glVertex3f(b_coord[0], b_coord[1], b_coord[2]);
 }
 
+template <int dimensions, typename Precision>
+Line<dimensions, Precision>& Line<dimensions, Precision>::operator=(const Line<dimensions, Precision> &line)
+{
+	if (this == &line)	return *this;
+
+	for(int i = 0; i < 2; ++i) {
+		this->points_[i] = line.points_[i];
+	}
+
+	this->id_ = line.id_;
+
+	return *this;
+}
+
 template <int d, typename P_>
 std::ostream &operator<<(std::ostream &os, const Line<d, P_> &line)
 {
