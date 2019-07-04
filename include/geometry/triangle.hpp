@@ -2,7 +2,7 @@
 Class for a triangle
 
 id_: Unique triangle identifier
-lines_: Triangle lines
+points_: Triangle points
 */
 
 #ifndef DELAUNAY_TRIANGULATION_GEOMETRY_TRIANGLE_HPP_
@@ -13,7 +13,7 @@ lines_: Triangle lines
 #include <istream>
 
 #include <geometry/vector.hpp>
-#include <geometry/line.hpp>
+#include <geometry/point.hpp>
 
 namespace geometry
 {
@@ -23,12 +23,12 @@ struct Triangle
 {
 private:
 	int id_;
-	std::array<Line<dimensions, Precision>, 3> lines_;
+	std::array<Point<dimensions, Precision>, 3> points_;
 
 public:
 	Triangle();
 	Triangle(const Triangle<dimensions, Precision> &triangle);
-	Triangle(const std::array<Line<dimensions, Precision>, 3> lines);
+	Triangle(const std::array<Point<dimensions, Precision>, 3> points);
 
 	void render();
 
