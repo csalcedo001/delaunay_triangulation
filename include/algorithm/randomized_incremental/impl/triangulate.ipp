@@ -41,9 +41,7 @@ Triangulation<Precision> Triangulate(std::vector<Point<Precision>> &point_vector
 
 	for (int i = 1; i < n; ++i)
 	{
-		auto current_point = std::make_shared<Point<Precision>>(point_vector[i]);
-
-		
+		da_graph.InsertPoint(point_vector[i]);
 	}
 
 

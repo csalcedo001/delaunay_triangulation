@@ -3,6 +3,7 @@
 
 #include <algorithm/randomized_incremental/node.hpp>
 #include <algorithm/randomized_incremental/infinite_point.hpp>
+#include <algorithm/randomized_incremental/point.hpp>
 
 namespace algorithm
 {
@@ -20,6 +21,8 @@ class DirectedAcyclicGraph
 public:
 	// Create first triangle and node with left_point_, right_point_ and initial_point
 	DirectedAcyclicGraph(Point<Precision> &initial_point);
+	
+	void InsertPoint(Point<Precision> &new_point);
 };
 
 } // namespace randomized_incremental
