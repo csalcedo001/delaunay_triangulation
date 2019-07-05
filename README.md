@@ -3,7 +3,7 @@
 Final project.
 
 [Paper](https://www.overleaf.com/4726587858dbytpgbbdzhh) 
-[Presentacion](https://www.overleaf.com/7172183719ydfsgvkdqgqy)
+[Presentation](https://www.overleaf.com/7172183719ydfsgvkdqgqy)
 
 ## TODOs
 
