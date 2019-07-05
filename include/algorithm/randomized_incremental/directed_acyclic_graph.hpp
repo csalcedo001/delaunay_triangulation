@@ -29,5 +29,7 @@ public:
 
 } // namespace algorithm
 
+#include <algorithm/randomized_incremental/impl/directed_acyclic_graph.ipp>
+
 #endif
 

@@ -12,11 +12,17 @@ namespace randomized_incremental
 template <typename Precision>
 class Node
 {
-	Triangle<Precision> triangle_;
+protected:
+	std::shared_ptr<Triangle<Precision>> triangle_;
+
+public:
+	Node(std::shared_ptr<Triangle<Precision>> triangle);
 };
 
 } // namespace randomized_incremental
 
 } // namespace algorithm
+
+#include <algorithm/randomized_incremental/impl/node.ipp>
 
 #endif
