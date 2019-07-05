@@ -48,25 +48,29 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 	ymid = (ymax + ymin) / 2.0;
 
 	/* Set up supertriangle */
-	std::array<Precision, dimensions> coord;
 	std::array<Point_*, 3> points;
-    coord[2] = 0;
-	
-	coord[0] = xmid - 20 * dmax;
-    coord[1] = ymid - dmax;
-   	Point_* p1 = new Point_(n_points, coord);
+    
+	std::array<Precision, dimensions> coord1;
+	coord1[0] = xmid - 20 * dmax;
+    coord1[1] = ymid - dmax;
+	coord1[2] = 0;
+   	Point_* p1 = new Point_(n_points, coord1);
     points[0] = p1;
     this->point_vector_.push_back(p1);
 
-	coord[0] = xmid;
-    coord[1] = ymid + 20 * dmax;
-    Point_* p2 = new Point_(n_points + 1, coord);
+	std::array<Precision, dimensions> coord2;
+	coord2[0] = xmid;
+    coord2[1] = ymid + 20 * dmax;
+	coord2[2] = 0;
+    Point_* p2 = new Point_(n_points + 1, coord2);
     points[1] = p2;
     this->point_vector_.push_back(p2);
 
-    coord[0] = xmid + 20 * dmax;
-    coord[1] = ymid - dmax;
-    Point_* p3 = new Point_(n_points + 2, coord);
+	std::array<Precision, dimensions> coord3;
+    coord3[0] = xmid + 20 * dmax;
+    coord3[1] = ymid - dmax;
+	coord3[2] = 0;
+    Point_* p3 = new Point_(n_points + 2, coord3);
     points[2] = p3;
     this->point_vector_.push_back(p3);
 
