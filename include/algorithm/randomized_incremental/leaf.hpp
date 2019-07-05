@@ -15,6 +15,9 @@ template <typename Precision>
 class Leaf : public Node<Precision>
 {
 	std::array<Leaf<Precision>, 3> nodes_;
+
+public:
+	Leaf(std::shared_ptr<Triangle<Precision>> triangle) : Node<Precision>(triangle) {}
 };
 
 } // namespace randomized_incremental

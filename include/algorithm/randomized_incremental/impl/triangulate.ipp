@@ -26,7 +26,7 @@ Triangulation<Precision> Triangulate(std::vector<Point<Precision>> &point_vector
 	
 	for (int i = 1; i < n; ++i)
 	{
-		if (point_vector[i] > max_element)
+		if (max_element < point_vector[i])
 		{
 			max_element = point_vector[i];
 			max_index = i;

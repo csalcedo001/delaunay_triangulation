@@ -11,7 +11,7 @@ namespace randomized_incremental
 {
 
 template <typename Precision>
-Triangulation<Precision> Triangulate(std::vector<Point<Precision>> point_vector);
+Triangulation<Precision> Triangulate(std::vector<Point<Precision>> &point_vector);
 
 } // namespace randomized_incremental
 
