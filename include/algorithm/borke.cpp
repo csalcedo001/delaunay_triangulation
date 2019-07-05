@@ -1,11 +1,31 @@
-#include <iostream>
-
 #include <geometry.hpp>
 #include <generator/generator.hpp>
-#include <algorithm/borke.hpp>
 #include <window/canvas.hpp>
 
+#include <iostream>
+#include <stdlib.h> // for C qsort 
+#include <cmath>
+#include <time.h> // for random
+
+
 using namespace std; 
+
+const int MaxVertices = 500;
+const int MaxTriangles = 1000;
+const int n_MaxPoints = 10; // for the test programm
+const double EPSILON = 0.000001;
+
+struct ITRIANGLE{
+  int p1, p2, p3;
+};
+
+struct IEDGE{
+  int p1, p2;
+};
+
+struct XYZ{
+  double x, y, z;
+};
 
 ////////////////////////////////////////////////////////////////////////
 // CircumCircle() :
@@ -252,42 +272,45 @@ void outputtriangle(int &nv, XYZ p[], ITRIANGLE v[], int &ntri){
   int max = 10;
   double x, y;
 
-  vector<Line<3, float>> lines;
-  vector<Point<3, float>> points;
+  array<Point<3, float>*, 2> l_points;
   array<float, 3> coordinates;
-  array<Point<3, float>, 2> l_points;
+  vector<Point<3, float>*> points;
+  vector<Line<3, float>*> lines;
 
   for(int i = 0; i < ntri; i++) 
   {
     coordinates[0] = p[v[i].p1].x;
     coordinates[1] = p[v[i].p1].y;
-    coordinates[2] = 0;
-    Point<3, float> p1(coordinates); 
+    coordinates[2] = p[v[i].p1].z;
+    Point<3, float>* p1 = new Point<3, float>(coordinates); 
     points.push_back(p1);
 
     coordinates[0] = p[v[i].p2].x;
     coordinates[1] = p[v[i].p2].y;
-    coordinates[2] = 0;
-    Point<3, float> p2(coordinates); 
+    coordinates[2] = p[v[i].p2].z;
+    Point<3, float>* p2 = new Point<3, float>(coordinates); 
     points.push_back(p2);
 
     coordinates[0] = p[v[i].p3].x;
     coordinates[1] = p[v[i].p3].y;
-    coordinates[2] = 0;
-    Point<3, float> p3(coordinates); 
+    coordinates[2] = p[v[i].p3].z;
+    Point<3, float>* p3 = new Point<3, float>(coordinates); 
     points.push_back(p3);
 
     l_points[0] = p1;
     l_points[1] = p2;
-    lines.emplace_back(l_points);
+    Line<3, float>* l1 = new Line<3, float>(l_points);
+    lines.push_back(l1);
 
     l_points[0] = p1;
     l_points[1] = p3;
-    lines.emplace_back(l_points);
+    Line<3, float>* l2 = new Line<3, float>(l_points);
+    lines.push_back(l2);
 
     l_points[0] = p2;
     l_points[1] = p3;
-    lines.emplace_back(l_points);
+    Line<3, float>* l3 = new Line<3, float>(l_points);
+    lines.push_back(l3);
 
     cout<<(int)p[v[i].p1].x<<" "<< (int)p[v[i].p1].y<<" "<< (int)p[v[i].p2].x
     <<" "<< (int)p[v[i].p2].y<<"\n";
@@ -323,8 +346,9 @@ int main(){
 
     do{
       b_Ok = true;
-      x = (double)random(10);
-      y = (double)random(10);
+      x = (double)random(500);
+      y = (double)random(500);
+      z = (double)random(10);
       for(int n_Cpt = 0; n_Cpt <= nv; n_Cpt++){
         if((x == p[n_Cpt].x) && (y == p[n_Cpt].y)) b_Ok = false;
       }// to avoid similar points in the array
@@ -340,6 +364,7 @@ int main(){
     }   
     p[nv].x = x * 1.0;
     p[nv].y = y * 1.0;
+    p[nv].z = z * 1.0;
     nv++;
   }
 

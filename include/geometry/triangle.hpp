@@ -21,16 +21,17 @@ namespace geometry
 template <int dimensions, typename Precision>
 struct Triangle
 {
-private:
 	int id_;
-	std::array<Point<dimensions, Precision>, 3> points_;
+	std::array<Point<dimensions, Precision>*, 3> points_;
+	bool checked = false;
 
-public:
 	Triangle();
 	Triangle(const Triangle<dimensions, Precision> &triangle);
-	Triangle(const std::array<Point<dimensions, Precision>, 3> points);
+	Triangle(const std::array<Point<dimensions, Precision>*, 3> points);
 
 	void render();
+
+	Triangle<dimensions, Precision>& operator=(const Triangle<dimensions, Precision> &triangle);
 
     template <int d, typename P_>
 	friend std::ostream &operator<<(std::ostream &os, const Triangle<d, P_> &triangle);

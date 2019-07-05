@@ -2,7 +2,8 @@
 
 Final project.
 
-[Overleaf report](https://www.overleaf.com/3571377254rxzpvkwwzmrd) 
+[Paper](https://www.overleaf.com/4726587858dbytpgbbdzhh) 
+[Presentacion](https://www.overleaf.com/7172183719ydfsgvkdqgqy)
 
 ## TODOs
 

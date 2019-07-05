@@ -22,7 +22,7 @@
 using namespace std;
 using namespace geometry;
 
-GLfloat zoom = 50.f;
+GLfloat zoom = 5.f;
 GLfloat alpha = 210.f;
 GLfloat _beta = -70.f;
 
@@ -71,9 +71,9 @@ class Window
 	int mode_ = 0;
     string title = "Window";
 
-	vector<Geometry_> geometries_;
+	vector<Geometry_*> geometries_;
 public:
-	Window(int mode, vector<Geometry_> geometries)
+	Window(int mode, vector<Geometry_*> geometries)
 	{
 		this->mode_ = mode;
 		this->geometries_ = geometries;
@@ -131,7 +131,7 @@ public:
 				glBegin(GL_LINES);
 				for (auto &it : this->geometries_)
 				{
-					it.render();
+					it->render();
 				}
 				glEnd();
 			} else if (this->mode_ == 2)
@@ -139,7 +139,7 @@ public:
 				glBegin(GL_POINTS);
 				for (auto &it : this->geometries_)
 				{
-					it.render();
+					it->render();
 				}
 				glEnd();
 			}

@@ -1,33 +1,24 @@
-// #include <window/canvas.hpp>
+#include <window/canvas.hpp>
 #include <iostream>
 
-#include <geometry/point.hpp>
+#include <geometry.hpp>
 #include <generator/generator.hpp>
-#include <algorithm/borke.hpp>
 
 
 int main (void)
 {
-	// vector<Point<3, float>> points;
-	// array<float, 3> coordinates;
-	// coordinates[0] = 0;
-	// coordinates[1] = 0;
-	// coordinates[2] = 0;
-	// points.emplace_back(coordinates);
-	// coordinates[0] = 1;
-	// coordinates[1] = 1;
-	// coordinates[2] = 1;
-	// points.emplace_back(coordinates);
-	// Window w(points);
-	// w.display();
+	generator::NormalDistribution<3, double> point_generator;
 
-	generator::NormalDistribution<3, float> point_generator;
-
-	std::vector<geometry::Point<3, float>> points;
+    std::vector<geometry::Point<3, double>> points;
+	std::vector<geometry::Point<3, double>*> points_ptr;
 	
 	for (int i = 0; i < 10; i++)
 	{
-		points.push_back(point_generator());
+		geometry::Point<3, double> point = point_generator();
+		point.coordinates_[2] = 0;
+		geometry::Point<3, double> *point_ptr = new Point<3, double>(point.coordinates_);
+		points.push_back(point);
+		points_ptr.push_back(point_ptr);
 	}
 
 	for (int i = 0; i < points.size(); i++)
@@ -35,7 +26,19 @@ int main (void)
 		std::cout << points[i] << std::endl;
 	}
 
-	algorithm::Borke<3, float> borke_triangulation(points);
+	geometry::Triangulation<3, double> t(points_ptr);
+	std::vector<geometry::Triangle<3, double>*> triangles = t.incremental_triangulation();
+	std::cout << "Finished: " << triangles.size() << " triangles\n";
+	for (auto &i : triangles)
+	{
+		std::cout << *i << "\n";
+	}
+
+    Window<Point<3, double>> w1(2, points_ptr);
+	w1.display();
+
+	Window<Triangle<3, double>> w2(1, triangles);
+	w2.display();
 
 	return 0;
 };
