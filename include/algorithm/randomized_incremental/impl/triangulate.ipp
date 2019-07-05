@@ -5,6 +5,7 @@
 
 #include <algorithm/randomized_incremental/point.hpp>
 #include <algorithm/randomized_incremental/triangle.hpp>
+#include <algorithm/randomized_incremental/directed_acyclic_graph.hpp>
 
 namespace algorithm
 {
@@ -35,6 +36,8 @@ Triangulation<Precision> Triangulate(std::vector<Point<Precision>> &point_vector
 	
 	// Move element to the front 
 	std::swap(point_vector[max_index], point_vector[0]);
+
+	DirectedAcyclicGraph<Precision> da_graph(max_element);
 
 	for (int i = 1; i < n; ++i)
 	{
