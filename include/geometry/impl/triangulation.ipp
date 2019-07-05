@@ -60,13 +60,13 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 
 	coord[0] = xmid;
     coord[1] = ymid + 20 * dmax;
-    Point_* p2 = new Point_(n_points, coord);
+    Point_* p2 = new Point_(n_points + 1, coord);
     points[1] = p2;
     this->point_vector_.push_back(p2);
 
     coord[0] = xmid + 20 * dmax;
     coord[1] = ymid - dmax;
-    Point_* p3 = new Point_(n_points, coord);
+    Point_* p3 = new Point_(n_points + 2, coord);
     points[2] = p3;
     this->point_vector_.push_back(p3);
 
@@ -74,7 +74,6 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 	triangulation.push_back(supertriangle);
 
 	/* Include each point one at a time into the existing mesh */
-	std::array<Point_*, 2> pair;
 	bool in_circumcircle;
 	Precision xcentre, ycentre, radio;
 	Line_ edges[1000];
@@ -100,17 +99,20 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 			}
 			if (in_circumcircle)
 			{
-				pair[0] = (*triangle_it)->points_[0];
-				pair[1] = (*triangle_it)->points_[1];
-				edges[n_edges] = Line_(pair);
+				std::array<Point_*, 2> pair1;
+				pair1[0] = (*triangle_it)->points_[0];
+				pair1[1] = (*triangle_it)->points_[1];
+				edges[n_edges] = Line_(pair1);
 
-				pair[0] = (*triangle_it)->points_[0];
-				pair[1] = (*triangle_it)->points_[2];
-				edges[n_edges + 1] = Line_(pair);
+				std::array<Point_*, 2> pair2;
+				pair2[0] = (*triangle_it)->points_[0];
+				pair2[1] = (*triangle_it)->points_[2];
+				edges[n_edges + 1] = Line_(pair2);
 
-				pair[0] = (*triangle_it)->points_[1];
-				pair[1] = (*triangle_it)->points_[2];
-				edges[n_edges + 2] = Line_(pair);
+				std::array<Point_*, 2> pair3;
+				pair3[0] = (*triangle_it)->points_[1];
+				pair3[1] = (*triangle_it)->points_[2];
+				edges[n_edges + 2] = Line_(pair3);
 				
 				n_edges += 3;
 
@@ -148,11 +150,12 @@ std::vector<Triangle<dimensions, Precision>*> Triangulation<dimensions, Precisio
 		{
 			if (edges[i].points_[0]->id_ == -1) { continue; }
 			
-			points[0] = edges[i].points_[0];
-			points[1] = edges[i].points_[1];
-			points[2] = (*point_it);
+			std::array<Point_*, 3> triangle_points;
+			triangle_points[0] = edges[i].points_[0];
+			triangle_points[1] = edges[i].points_[1];
+			triangle_points[2] = (*point_it);
 
-			Triangle_* triangle = new Triangle_(points);
+			Triangle_* triangle = new Triangle_(triangle_points);
 			triangulation.push_back(triangle);
 		}
 	}
